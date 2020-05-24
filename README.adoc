@@ -1,0 +1,5 @@
+# ICX Explorer Lite
+
+Alternative chain explorer for smart contract development on ICON blockchains.
+
+In progress...
