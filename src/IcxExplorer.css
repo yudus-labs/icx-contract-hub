@@ -1,0 +1,13 @@
+#IcxExplorer-header {
+  text-align: center;
+  font-size: x-large;
+}
+
+#IcxExplorer-body {
+  background-color: oldlace;
+}
+
+.api-button{
+  background-color: peru;
+  border-style: none;
+}
