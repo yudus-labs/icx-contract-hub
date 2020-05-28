@@ -7,6 +7,7 @@ export class UserSetting extends React.Component {
     this.state = {
       title: props.title,
       endpoint: props.endpoint,
+      owner: props.owner,
       pkey: props.pkey,
       contract: props.contract,
     };
@@ -18,11 +19,18 @@ export class UserSetting extends React.Component {
     this.setState(data);
   };
 
+  handleOwnerChange = (event) => {
+    const data = { owner: event.target.value };
+    this.context.updateExplorerState(data);
+    this.setState(data);
+  };
+
   handlePKeyChange = (event) => {
     const data = { pkey: event.target.value };
     this.context.updateExplorerState(data);
     this.setState(data);
   };
+
   handleContractChange = (event) => {
     const data = { contract: event.target.value };
     this.context.updateExplorerState(data);
@@ -42,6 +50,25 @@ export class UserSetting extends React.Component {
             className="form-control"
             value={this.state.endpoint}
             onChange={this.handleEndpointChange}
+          />
+        </div>
+      </div>
+    );
+  };
+
+  Owner = () => {
+    return (
+      <div className="row my-1">
+        <div className="col-sm-2">
+          <span className="inline-span">Owner Address</span>
+        </div>
+
+        <div className="col-sm-10">
+          <input
+            type="text"
+            className="form-control"
+            value={this.state.owner}
+            onChange={this.handleOwnerChange}
           />
         </div>
       </div>
@@ -92,6 +119,7 @@ export class UserSetting extends React.Component {
         <h4>{this.state.title}</h4>
         <div className="container">
           <this.Endpoint />
+          <this.Owner />
           <this.PKey />
           <this.Contract />
         </div>

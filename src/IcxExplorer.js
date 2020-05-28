@@ -7,9 +7,11 @@ import "./css/IcxExplorer.css";
 const ExplorerContext = React.createContext();
 UserSetting.contextType = ExplorerContext;
 ApiItem.contextType = ExplorerContext;
+ContractApi.contextType = ExplorerContext;
 CallResult.contextType = ExplorerContext;
 
-const DEFAULT_ENDPOINT = "https://bicon.tracker.solidwallet.io";
+const DEFAULT_ENDPOINT = "https://bicon.tracker.solidwallet.io/api/v3";
+const DEFAULT_OWNER = "hxfafe76ab475a06b184587695327e72c04b4566a4";
 const DEFAULT_PKEY = "Please input private key here";
 const DEFAULT_CONTRACT = "cxa6ba8f0730ad952b5898ac3e5e90a17e20574eff";
 
@@ -19,9 +21,10 @@ class IcxExplorer extends React.Component {
     this.state = {
       callResult: "Empty call result",
       lastCall: "",
-      endpoint: "",
+      endpoint: DEFAULT_ENDPOINT,
+      owner: DEFAULT_OWNER,
       pkey: "",
-      contract: "",
+      contract: DEFAULT_CONTRACT,
     };
   }
 
@@ -36,7 +39,14 @@ class IcxExplorer extends React.Component {
 
         <ExplorerContext.Provider
           value={{
-            explorerState: { callResult: this.state.callResult },
+            explorerState: {
+              callResult: this.state.callResult,
+              lastCall: this.state.lastCall,
+              endpoint: this.state.endpoint,
+              owner: this.state.owner,
+              pkey: this.state.pkey,
+              contract: this.state.contract,
+            },
             updateExplorerState: this.updateExplorerState,
           }}
         >
@@ -45,6 +55,7 @@ class IcxExplorer extends React.Component {
             <UserSetting
               title="User setting"
               endpoint={DEFAULT_ENDPOINT}
+              owner={DEFAULT_OWNER}
               pkey={DEFAULT_PKEY}
               contract={DEFAULT_CONTRACT}
             />

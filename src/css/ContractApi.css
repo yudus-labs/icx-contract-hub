@@ -1,4 +1,12 @@
-.api-button{
+.btn-primary {
   background-color: peru;
   border-style: none;
+}
+
+.btn-primary:hover {
+  background-color: rgb(155, 102, 50);
+}
+
+.btn-primary:active {
+  background-color: rgb(51, 34, 16)!important;
 }

@@ -8,7 +8,6 @@ export class CallResult extends React.Component {
   }
 
   render() {
-    console.log("Call result: " + this.context.explorerState.callResult);
     return (
       <div className="container CallResult">
         <h4>{this.state.title}</h4>
