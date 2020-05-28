@@ -12,14 +12,15 @@ CallResult.contextType = ExplorerContext;
 
 const DEFAULT_ENDPOINT = "https://bicon.tracker.solidwallet.io/api/v3";
 const DEFAULT_OWNER = "hxfafe76ab475a06b184587695327e72c04b4566a4";
-const DEFAULT_PKEY = "Please input private key here";
+const DEFAULT_PKEY = "";
 const DEFAULT_CONTRACT = "cxa6ba8f0730ad952b5898ac3e5e90a17e20574eff";
 
 class IcxExplorer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      callResult: "Empty call result",
+      callResult: "",
+      callTx: "",
       lastCall: "",
       endpoint: DEFAULT_ENDPOINT,
       owner: DEFAULT_OWNER,
@@ -41,6 +42,7 @@ class IcxExplorer extends React.Component {
           value={{
             explorerState: {
               callResult: this.state.callResult,
+              callTx: this.state.callTx,
               lastCall: this.state.lastCall,
               endpoint: this.state.endpoint,
               owner: this.state.owner,
@@ -62,8 +64,9 @@ class IcxExplorer extends React.Component {
             <br />
             <ContractApi title="Contract APIs" />
             <br />
-            <CallResult title="Contract call result" />
-            <br />
+          </div>
+          <div className="fixed-bottom">
+            <CallResult title="Output" className="bottom" />
           </div>
         </ExplorerContext.Provider>
       </div>

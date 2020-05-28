@@ -10,3 +10,12 @@
 .btn-primary:active {
   background-color: rgb(51, 34, 16)!important;
 }
+
+.api-button {
+  /* width: 30%; */
+  /* min-width: 200px; */
+}
+
+.ApiItem {
+  background-color: rgb(235, 217, 187);
+}

@@ -7,61 +7,140 @@ export class ApiItem extends React.Component {
     super(props);
     this.state = {
       methodName: props.methodName,
-      methodParams: "{}",
+      methodParams: props.methodParams,
+      readonly: props.readonly,
+      paramValues: {},
     };
   }
 
   handleClick = async () => {
-    this.call(this.state.methodName, this.state.methodParams);
+    if (this.state.readonly) {
+      this.call(this.state.methodName, this.state.paramValues);
+    } else {
+      this.sendCallTx(this.state.methodName, this.state.paramValues);
+    }
   };
 
-  handleChange = (event) => {
-    this.setState({ methodParams: event.target.value });
+  updateParamValue = (param, value) => {
+    const paramValues = {};
+    paramValues[param] = value;
+    this.setState({ paramValues: paramValues });
   };
 
   async call(method, params) {
     console.log(`Calling method: ${method}`);
-    console.log(`..with params: ${params}`);
+    console.log(`..with params: ${JSON.stringify(params)}`);
 
-    const provider = new IconService.HttpProvider(
-      this.context.explorerState.endpoint
-    );
-    const iconService = new IconService(provider);
-    const call = new IconService.IconBuilder.CallBuilder()
-      .to(this.context.explorerState.contract)
-      .method(method)
-      .params(JSON.parse(params))
-      .build();
-    const result = await iconService.call(call).execute();
+    let result = "";
+
+    try {
+      const provider = new IconService.HttpProvider(
+        this.context.explorerState.endpoint
+      );
+      const iconService = new IconService(provider);
+      const call = new IconService.IconBuilder.CallBuilder()
+        .to(this.context.explorerState.contract)
+        .method(method)
+        .params(params)
+        .build();
+      result = await iconService.call(call).execute();
+    } catch (err) {
+      result = err;
+    }
 
     this.context.updateExplorerState({
       callResult: result,
+      callTx: "",
+      lastCall: this.state.methodName,
+    });
+    console.log("Call result: " + result);
+  }
+
+  async sendCallTx(method, params) {
+    console.log(`Calling method: ${method}`);
+    console.log(`..with params: ${JSON.stringify(params)}`);
+
+    let txHash = "";
+
+    try {
+      const provider = new IconService.HttpProvider(
+        this.context.explorerState.endpoint
+      );
+      const iconService = new IconService(provider);
+
+      const wallet = IconService.IconWallet.loadPrivateKey(
+        this.context.explorerState.pkey
+      );
+
+      const transaction = new IconService.IconBuilder.CallTransactionBuilder()
+        .from(this.context.explorerState.owner)
+        .to(this.context.explorerState.contract)
+        .stepLimit(IconService.IconConverter.toBigNumber("5000000000"))
+        .nid(IconService.IconConverter.toBigNumber("3"))
+        .nonce(IconService.IconConverter.toBigNumber("1"))
+        .version(IconService.IconConverter.toBigNumber("3"))
+        .timestamp(new Date().getTime() * 1000)
+        .method(method)
+        .params(params)
+        .build();
+
+      const signedTx = new IconService.SignedTransaction(transaction, wallet);
+
+      txHash = await iconService.sendTransaction(signedTx).execute();
+    } catch (err) {
+      txHash = err;
+    }
+
+    this.context.updateExplorerState({
+      callResult: "",
+      callTx: txHash,
       lastCall: this.state.methodName,
     });
 
-    console.log("Call result: " + result);
+    console.log("Call Tx: " + txHash);
   }
 
   render() {
     return (
-      <div className="row my-1 ApiItem">
-        <div className="col-sm-3">
-          <div
-            type="button"
-            className="btn btn-primary"
-            onClick={this.handleClick}
-          >
-            {this.state.methodName}
+      <div className="row my-3 ApiItem">
+        <div className="container">
+          <div className="row">
+            <div
+              type="button"
+              className="btn btn-primary btn-block api-button"
+              onClick={this.handleClick}
+            >
+              {this.state.methodName}
+            </div>
           </div>
-        </div>
 
-        <div className="col-sm-9">
-          <input
-            type="text"
-            className="form-control"
-            value={this.state.methodParams}
-            onChange={this.handleChange}
-          />
+          {this.state.methodParams.length > 0 ? (
+            this.state.methodParams.map((param, index) => (
+              <div className="row my-1" key={index}>
+                <div className="col">
+                  <div className="row">
+                    <div className="col-auto">
+                      <var>{param.name}</var> : <code>{param.type}</code>
+                    </div>
+                    <div className="col">
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={this.state.paramValues[param.name] || ""}
+                        onChange={(e) =>
+                          this.updateParamValue(param.name, e.target.value)
+                        }
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="row my-1">
+              <div className="col">No params</div>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -98,29 +177,39 @@ export class ContractApi extends React.Component {
       .getList()
       .filter((item) => item.type === "function")
       .filter((item) => !item.hasOwnProperty("readonly"))
-      .map((item) => item.name);
+      .map((item) => ({ methodName: item.name, methodParams: item.inputs }));
     this.setState({ methods: methods });
 
     const readonlyMethods = apiList
       .getList()
       .filter((item) => item.type === "function")
       .filter((item) => item.hasOwnProperty("readonly"))
-      .map((item) => item.name);
+      .map((item) => ({ methodName: item.name, methodParams: item.inputs }));
     this.setState({ readonlyMethods: readonlyMethods });
 
-    console.log("API list: " + JSON.stringify(apiList.getList(), null, 2));
+    // console.log("API list: " + JSON.stringify(apiList.getList(), null, 2));
     // console.log("API list: " + JSON.stringify(methods, null, 2));
   }
 
   lsMethods() {
-    return this.state.methods.map((item) => (
-      <ApiItem methodName={item} key={item} />
+    return this.state.methods.map((item, index) => (
+      <ApiItem
+        methodName={item.methodName}
+        methodParams={item.methodParams}
+        readonly={false}
+        key={index}
+      />
     ));
   }
 
   lsReadonlyMethods() {
-    return this.state.readonlyMethods.map((item) => (
-      <ApiItem methodName={item} key={item} />
+    return this.state.readonlyMethods.map((item, index) => (
+      <ApiItem
+        methodName={item.methodName}
+        methodParams={item.methodParams}
+        readonly={true}
+        key={index}
+      />
     ));
   }
 
@@ -128,11 +217,18 @@ export class ContractApi extends React.Component {
     return (
       <div className="container ContractApi">
         <h4>{this.state.title}</h4>
-        <h5>Readonly methods</h5>
-        <div className="container">{this.lsReadonlyMethods()}</div>
-        <br />
-        <h5>Writable methods</h5>
-        <div className="container">{this.lsMethods()}</div>
+        <div className="container">
+          <div className="row">
+            <div className="col">
+              <h5>Readonly methods</h5>
+              <div className="container">{this.lsReadonlyMethods()}</div>
+            </div>
+            <div className="col">
+              <h5>Writable methods</h5>
+              <div className="container">{this.lsMethods()}</div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

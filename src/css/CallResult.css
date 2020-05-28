@@ -1,0 +1,14 @@
+.CallResult {
+  background-color: rgb(255, 252, 245);
+  border-color: black;
+  border-style: solid;
+  border-width: 0.5px;
+}
+
+.CallResult-title {
+  background-color: gray;
+}
+
+.text-area:read-only {
+  background-color: rgb(241, 233, 218);
+}
