@@ -298,6 +298,7 @@ export class ContractApi extends React.Component {
                     this.fetchMethods();
                   }
                 }}
+                title="Press Enter to refresh contract API list"
               />
             </div>
             <div className="col-auto">
