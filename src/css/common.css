@@ -1,0 +1,11 @@
+:root {
+  --main-color: rgb(106, 172, 185);
+  --main-color-lighter: rgb(130, 207, 223);
+  --main-color-lightest: rgb(180, 233, 243);
+  --main-color-dark-1: rgb(90, 147, 158);
+  --main-color-dark-2: rgb(77, 125, 134);
+  --main-color-dark-3: rgb(65, 107, 114);
+  --background: rgb(223, 233, 235);
+  --background-lighter: rgb(222, 239, 241);
+  --background-darker: rgb(188, 207, 211);
+}

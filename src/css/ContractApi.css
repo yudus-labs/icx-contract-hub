@@ -1,21 +1,44 @@
+@import "common.css";
 .btn-primary {
-  background-color: peru;
+  background-color: var(--main-color-dark-1);
   border-style: none;
 }
 
 .btn-primary:hover {
-  background-color: rgb(155, 102, 50);
+  background-color: var(--main-color-dark-2);
 }
 
 .btn-primary:active {
-  background-color: rgb(51, 34, 16)!important;
+  background-color: var(--main-color-dark-3)!important;
 }
 
-.api-button {
-  /* width: 30%; */
-  /* min-width: 200px; */
+.btn-secondary {
+  background-color: var(--main-color);
+  border-style: none;
+}
+
+.btn-secondary:hover {
+  background-color: var(--main-color-dark-2);
+}
+
+.btn-secondary:active {
+  background-color: var(--main-color-dark-3)!important;
 }
 
 .ApiItem {
-  background-color: rgb(235, 217, 187);
+  background-color: var(--background-darker);
+}
+
+.text-area:focus {
+  outline: none !important;
+  border: 1px solid var(--main-color-dark-1);
+  box-shadow: 0 0 10px var(--main-color-dark-2);
+}
+
+.param-input {
+  height: 30px;
+}
+
+.checktx-button {
+  height: 35px;
 }

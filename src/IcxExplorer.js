@@ -1,14 +1,12 @@
 import React from "react";
 import { UserSetting } from "./UserSetting.js";
 import { ContractApi, ApiItem } from "./ContractApi.js";
-import { CallResult } from "./CallResult.js";
 import "./css/IcxExplorer.css";
 
 const ExplorerContext = React.createContext();
 UserSetting.contextType = ExplorerContext;
 ApiItem.contextType = ExplorerContext;
 ContractApi.contextType = ExplorerContext;
-CallResult.contextType = ExplorerContext;
 
 const DEFAULT_ENDPOINT = "https://bicon.tracker.solidwallet.io/api/v3";
 const DEFAULT_OWNER = "hxfafe76ab475a06b184587695327e72c04b4566a4";
@@ -19,9 +17,6 @@ class IcxExplorer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      callResult: "",
-      callTx: "",
-      lastCall: "",
       endpoint: DEFAULT_ENDPOINT,
       owner: DEFAULT_OWNER,
       pkey: "",
@@ -35,15 +30,12 @@ class IcxExplorer extends React.Component {
 
   render() {
     return (
-      <div className="container IcxExplorer">
+      <div className="container-fluid IcxExplorer">
         <header id="IcxExplorer-header">ICX Contract Explorer</header>
 
         <ExplorerContext.Provider
           value={{
             explorerState: {
-              callResult: this.state.callResult,
-              callTx: this.state.callTx,
-              lastCall: this.state.lastCall,
               endpoint: this.state.endpoint,
               owner: this.state.owner,
               pkey: this.state.pkey,
@@ -52,7 +44,7 @@ class IcxExplorer extends React.Component {
             updateExplorerState: this.updateExplorerState,
           }}
         >
-          <div className="container" id="IcxExplorer-body">
+          <div className="container-fluid" id="IcxExplorer-body">
             <br />
             <UserSetting
               title="User setting"
@@ -64,9 +56,6 @@ class IcxExplorer extends React.Component {
             <br />
             <ContractApi title="Contract APIs" />
             <br />
-          </div>
-          <div className="fixed-bottom">
-            <CallResult title="Output" className="bottom" />
           </div>
         </ExplorerContext.Provider>
       </div>

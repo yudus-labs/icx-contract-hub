@@ -2,6 +2,55 @@ import React from "react";
 import "./css/ContractApi.css";
 import IconService from "icon-sdk-js";
 
+function Output(props) {
+  return (
+    <div className="container">
+      {props.txHash ? (
+        <div className="row">
+          <div className="col">
+            <br />
+            <div
+              type="button"
+              className="btn btn-secondary checktx-button"
+              onClick={props.checkTx}
+            >
+              TX hash below, click here to check its result
+            </div>
+
+            <textarea
+              value={props.txHash}
+              readOnly={true}
+              rows="1"
+              className="form-control text-area"
+            />
+            <br />
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+
+      {props.callResult ? (
+        <div className="row">
+          <div className="col">
+            <br />
+            <h6>Call / Tx result</h6>
+            <textarea
+              value={JSON.stringify(props.callResult, null, 2)}
+              readOnly={true}
+              rows="4"
+              className="form-control text-area"
+            />
+            <br />
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+    </div>
+  );
+}
+
 export class ApiItem extends React.Component {
   constructor(props) {
     super(props);
@@ -10,6 +59,8 @@ export class ApiItem extends React.Component {
       methodParams: props.methodParams,
       readonly: props.readonly,
       paramValues: {},
+      txHash: "",
+      callResult: "",
     };
   }
 
@@ -48,11 +99,8 @@ export class ApiItem extends React.Component {
       result = err;
     }
 
-    this.context.updateExplorerState({
-      callResult: result,
-      callTx: "",
-      lastCall: this.state.methodName,
-    });
+    this.setState({ callResult: result, txHash: "" });
+
     console.log("Call result: " + result);
   }
 
@@ -91,13 +139,27 @@ export class ApiItem extends React.Component {
       txHash = err;
     }
 
-    this.context.updateExplorerState({
-      callResult: "",
-      callTx: txHash,
-      lastCall: this.state.methodName,
-    });
+    this.setState({ callResult: "", txHash: txHash });
 
     console.log("Call Tx: " + txHash);
+  }
+
+  async checkTx(txHash) {
+    let txResult = "";
+
+    try {
+      const provider = new IconService.HttpProvider(
+        this.context.explorerState.endpoint
+      );
+      const iconService = new IconService(provider);
+      txResult = await iconService.getTransactionResult(txHash).execute();
+    } catch (err) {
+      txResult = err;
+    }
+
+    this.setState({
+      callResult: txResult,
+    });
   }
 
   render() {
@@ -107,44 +169,57 @@ export class ApiItem extends React.Component {
           <div className="row">
             <div
               type="button"
-              className="btn btn-primary btn-block api-button"
+              className="btn btn-primary api-button"
               onClick={this.handleClick}
             >
               {this.state.methodName}
             </div>
           </div>
 
-          {this.state.methodParams.length > 0 ? (
-            this.state.methodParams.map((param, index) => (
-              <div className="row my-1" key={index}>
-                <div className="col">
-                  <div className="row">
-                    <div className="col-auto">
-                      <var>{param.name}</var> : <code>{param.type}</code>
-                    </div>
-                    <div className="col">
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={this.state.paramValues[param.name] || ""}
-                        onChange={(e) =>
-                          this.updateParamValue(param.name, e.target.value)
-                        }
-                      />
+          {this.state.methodParams.length > 0
+            ? this.state.methodParams.map((param, index) => (
+                <div className="row my-1" key={index}>
+                  <div className="col">
+                    <div className="row">
+                      <div className="col-auto">
+                        <var>{param.name}</var> : <code>{param.type}</code>
+                      </div>
+                      <div className="col">
+                        <input
+                          type="text"
+                          className="form-control param-input"
+                          value={this.state.paramValues[param.name] || ""}
+                          onChange={(e) =>
+                            this.updateParamValue(param.name, e.target.value)
+                          }
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))
-          ) : (
-            <div className="row my-1">
-              <div className="col">No params</div>
-            </div>
-          )}
+              ))
+            : ""}
+
+          <Output
+            callResult={this.state.callResult}
+            txHash={this.state.txHash}
+            checkTx={async () => this.checkTx(this.state.txHash)}
+          />
         </div>
       </div>
     );
   }
+}
+
+function ApiList(props) {
+  return props.methods.map((item, index) => (
+    <ApiItem
+      methodName={item.methodName}
+      methodParams={item.methodParams}
+      readonly={props.readonly}
+      key={index}
+    />
+  ));
 }
 
 /**
@@ -191,41 +266,19 @@ export class ContractApi extends React.Component {
     // console.log("API list: " + JSON.stringify(methods, null, 2));
   }
 
-  lsMethods() {
-    return this.state.methods.map((item, index) => (
-      <ApiItem
-        methodName={item.methodName}
-        methodParams={item.methodParams}
-        readonly={false}
-        key={index}
-      />
-    ));
-  }
-
-  lsReadonlyMethods() {
-    return this.state.readonlyMethods.map((item, index) => (
-      <ApiItem
-        methodName={item.methodName}
-        methodParams={item.methodParams}
-        readonly={true}
-        key={index}
-      />
-    ));
-  }
-
   render() {
     return (
-      <div className="container ContractApi">
+      <div className="container-fluid ContractApi">
         <h4>{this.state.title}</h4>
-        <div className="container">
+        <div className="container-fluid">
           <div className="row">
-            <div className="col">
+            <div className="col mx-2">
               <h5>Readonly methods</h5>
-              <div className="container">{this.lsReadonlyMethods()}</div>
+              <ApiList methods={this.state.readonlyMethods} readonly={true} />
             </div>
-            <div className="col">
+            <div className="col mx-2">
               <h5>Writable methods</h5>
-              <div className="container">{this.lsMethods()}</div>
+              <ApiList methods={this.state.methods} readonly={false} />
             </div>
           </div>
         </div>

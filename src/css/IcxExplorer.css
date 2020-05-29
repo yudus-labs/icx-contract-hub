@@ -1,17 +1,13 @@
+@import "common.css";
 #IcxExplorer-header {
   text-align: center;
   font-size: x-large;
-  background-color: wheat;
+  background-color: var(--main-color-dark-2);
+  color: white;
   padding-top: 10px;
   padding-bottom: 10px;
 }
 
 #IcxExplorer-body {
-  background-color: oldlace;
-  margin-bottom: 300px;
-}
-
-.api-button {
-  background-color: peru;
-  border-style: none;
+  background-color: var(--background);
 }
