@@ -277,7 +277,7 @@ export class ContractApi extends React.Component {
   render() {
     return (
       <div className="container-fluid ContractApi">
-        <h4>{this.state.title}</h4>
+        <h4 id="ContractApi-title">{this.state.title}</h4>
         <div className="container-fluid">
           <div className="row my-4">
             <div className="col-auto">

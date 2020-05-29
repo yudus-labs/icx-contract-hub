@@ -26,7 +26,7 @@
 }
 
 .ApiItem {
-  background-color: var(--background-darker);
+  background-color: var(--background-dark-1);
 }
 
 .text-area:focus {
@@ -48,7 +48,14 @@
 }
 
 #ApiList-title {
-  background-color: var(--main-color-dark-3);
-  color: white;
+  background-color: var(--background-dark-2);
+  color: var(--background-darkest);
   padding: 10px;
+}
+
+#ContractApi-title {
+  background-color: var(--main-color-dark-2);
+  color: white;
+  padding: 5px;
+  padding-left: 20px;
 }

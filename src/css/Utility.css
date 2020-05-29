@@ -1,3 +1,11 @@
+@import "common.css";
 .inline-span {
   white-space: nowrap;
+}
+
+#Utility-title {
+  background-color: var(--main-color-dark-2);
+  color: white;
+  padding: 5px;
+  padding-left: 20px;
 }

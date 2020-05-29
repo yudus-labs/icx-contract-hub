@@ -1,13 +1,24 @@
 @import "common.css";
 #IcxExplorer-header {
-  background-color: var(--main-color-dark-2);
+  background-color: var(--main-color-dark-4);
   padding-top: 20px;
   padding-bottom: 20px;
 }
 
 #IcxExplorer-title {
-  font-size: x-large;
+  font-size: xx-large;
   color: white;
+}
+
+#IcxExplorer-subtitle {
+  font-size: large;
+  color: var(--background-dark-1);
+  font-family: 'Courier New', Courier, monospace;
+}
+
+#IcxExplorer-copyright {
+  font-size: smaller;
+  color: var(--background-dark-1);
 }
 
 #IcxExplorer-endpoint {

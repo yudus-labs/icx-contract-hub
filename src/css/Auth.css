@@ -1,7 +1,15 @@
+@import "common.css";
 .inline-span {
   white-space: nowrap;
 }
 
 .form-control {
   height: 30px;
+}
+
+#Auth-title {
+  background-color: var(--main-color-dark-2);
+  color: white;
+  padding: 5px;
+  padding-left: 20px;
 }

@@ -64,7 +64,7 @@ export class Auth extends React.Component {
   render() {
     return (
       <div className="container Auth">
-        <h4>{this.state.title}</h4>
+        <h4 id="Auth-title">{this.state.title}</h4>
         <div className="container">
           <this.Owner />
           <this.PKey />

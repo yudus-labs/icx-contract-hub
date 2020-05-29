@@ -5,7 +5,11 @@
   --main-color-dark-1: rgb(90, 147, 158);
   --main-color-dark-2: rgb(77, 125, 134);
   --main-color-dark-3: rgb(65, 107, 114);
+  --main-color-dark-4: rgb(52, 86, 92);
   --background: rgb(223, 233, 235);
   --background-lighter: rgb(222, 239, 241);
-  --background-darker: rgb(188, 207, 211);
+  --background-dark-1: rgb(188, 207, 211);
+  --background-dark-2: rgb(163, 179, 182);
+  --background-dark-3: rgb(132, 145, 148);
+  --background-darkest: rgb(39, 43, 44);
 }
