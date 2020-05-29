@@ -33,7 +33,7 @@ function Output(props) {
       {props.callResult ? (
         <div className="row">
           <div className="col">
-            <br />
+            {props.txHash ? "" : <br />}
             <h6>Call / Tx result</h6>
             <textarea
               value={JSON.stringify(props.callResult, null, 2)}
@@ -217,7 +217,7 @@ function ApiList(props) {
       methodName={item.methodName}
       methodParams={item.methodParams}
       readonly={props.readonly}
-      key={index}
+      key={index + item.methodName}
     />
   ));
 }
@@ -232,6 +232,7 @@ export class ContractApi extends React.Component {
       title: props.title,
       readonlyMethods: [],
       methods: [],
+      invalidContractError: "",
     };
   }
 
@@ -240,27 +241,34 @@ export class ContractApi extends React.Component {
   }
 
   async fetchMethods() {
-    const provider = new IconService.HttpProvider(
-      this.context.explorerState.endpoint
-    );
-    const iconService = new IconService(provider);
-    const apiList = await iconService
-      .getScoreApi(this.context.explorerState.contract)
-      .execute();
+    try {
+      const provider = new IconService.HttpProvider(
+        this.context.explorerState.endpoint
+      );
+      const iconService = new IconService(provider);
+      const apiList = await iconService
+        .getScoreApi(this.context.explorerState.contract)
+        .execute();
 
-    const methods = apiList
-      .getList()
-      .filter((item) => item.type === "function")
-      .filter((item) => !item.hasOwnProperty("readonly"))
-      .map((item) => ({ methodName: item.name, methodParams: item.inputs }));
-    this.setState({ methods: methods });
+      const methods = apiList
+        .getList()
+        .filter((item) => item.type === "function")
+        .filter((item) => !item.hasOwnProperty("readonly"))
+        .map((item) => ({ methodName: item.name, methodParams: item.inputs }));
+      this.setState({ methods: methods });
 
-    const readonlyMethods = apiList
-      .getList()
-      .filter((item) => item.type === "function")
-      .filter((item) => item.hasOwnProperty("readonly"))
-      .map((item) => ({ methodName: item.name, methodParams: item.inputs }));
-    this.setState({ readonlyMethods: readonlyMethods });
+      const readonlyMethods = apiList
+        .getList()
+        .filter((item) => item.type === "function")
+        .filter((item) => item.hasOwnProperty("readonly"))
+        .map((item) => ({ methodName: item.name, methodParams: item.inputs }));
+      this.setState({
+        readonlyMethods: readonlyMethods,
+        invalidContractError: "",
+      });
+    } catch (err) {
+      this.setState({ invalidContractError: err });
+    }
 
     // console.log("API list: " + JSON.stringify(apiList.getList(), null, 2));
     // console.log("API list: " + JSON.stringify(methods, null, 2));
@@ -271,14 +279,59 @@ export class ContractApi extends React.Component {
       <div className="container-fluid ContractApi">
         <h4>{this.state.title}</h4>
         <div className="container-fluid">
-          <div className="row">
-            <div className="col mx-2">
-              <h5>Readonly methods</h5>
-              <ApiList methods={this.state.readonlyMethods} readonly={true} />
+          <div className="row my-4">
+            <div className="col-auto">
+              <span className="inline-span">Contract address</span>
             </div>
-            <div className="col mx-2">
-              <h5>Writable methods</h5>
-              <ApiList methods={this.state.methods} readonly={false} />
+
+            <div className="col-sm-4">
+              <input
+                type="text"
+                className="form-control"
+                id="contract-address-input"
+                value={this.context.explorerState.contract}
+                onChange={(e) =>
+                  this.context.updateExplorerState({ contract: e.target.value })
+                }
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    this.fetchMethods();
+                  }
+                }}
+              />
+            </div>
+            <div className="col-auto">
+              <div
+                type="button"
+                className="btn btn-secondary btn-sm"
+                onClick={async () => this.fetchMethods()}
+              >
+                Refresh
+              </div>
+            </div>
+            <div className="col-auto">
+              {this.state.invalidContractError ? (
+                <div className="alert alert-warning" role="alert">
+                  {this.state.invalidContractError}
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col mx-1">
+              <h5 id="ApiList-title">Readonly methods</h5>
+              <div className="container">
+                <ApiList methods={this.state.readonlyMethods} readonly={true} />
+              </div>
+            </div>
+            <div className="col mx-1">
+              <h5 id="ApiList-title">Writable methods</h5>
+              <div className="container">
+                <ApiList methods={this.state.methods} readonly={false} />
+              </div>
             </div>
           </div>
         </div>
