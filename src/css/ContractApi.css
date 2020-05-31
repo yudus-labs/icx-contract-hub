@@ -9,7 +9,7 @@
 }
 
 .btn-primary:active {
-  background-color: var(--main-color-dark-3)!important;
+  background-color: var(--main-color-dark-3) !important;
 }
 
 .btn-secondary {
@@ -22,7 +22,7 @@
 }
 
 .btn-secondary:active {
-  background-color: var(--main-color-dark-3)!important;
+  background-color: var(--main-color-dark-3) !important;
 }
 
 .ApiItem {
@@ -58,4 +58,10 @@
   color: white;
   padding: 5px;
   padding-left: 20px;
+}
+
+.alert-error {
+  background-color: var(--error-bg-color);
+  border-style: none;
+  color: var(--error-text-color);
 }

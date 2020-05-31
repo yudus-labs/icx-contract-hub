@@ -121,7 +121,7 @@ export class ApiItem extends React.Component {
       );
 
       const transaction = new IconService.IconBuilder.CallTransactionBuilder()
-        .from(this.context.explorerState.owner)
+        .from(wallet.getAddress())
         .to(this.context.explorerState.contract)
         .stepLimit(IconService.IconConverter.toBigNumber("5000000000"))
         .nid(IconService.IconConverter.toBigNumber("3"))
@@ -312,7 +312,7 @@ export class ContractApi extends React.Component {
             </div>
             <div className="col-auto">
               {this.state.invalidContractError ? (
-                <div className="alert alert-warning" role="alert">
+                <div className="alert alert-error" role="alert">
                   {this.state.invalidContractError}
                 </div>
               ) : (

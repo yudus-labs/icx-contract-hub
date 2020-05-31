@@ -6,16 +6,9 @@ export class Auth extends React.Component {
     super(props);
     this.state = {
       title: props.title,
-      owner: props.owner,
       pkey: props.pkey,
     };
   }
-
-  handleOwnerChange = (event) => {
-    const data = { owner: event.target.value };
-    this.context.updateExplorerState(data);
-    this.setState(data);
-  };
 
   handlePKeyChange = (event) => {
     const data = { pkey: event.target.value };
@@ -23,33 +16,14 @@ export class Auth extends React.Component {
     this.setState(data);
   };
 
-  Owner = () => {
-    return (
-      <div className="row my-1">
-        <div className="col-sm-2">
-          <span className="inline-span">Owner Address</span>
-        </div>
-
-        <div className="col-sm-10">
-          <input
-            type="text"
-            className="form-control"
-            value={this.state.owner}
-            onChange={this.handleOwnerChange}
-          />
-        </div>
-      </div>
-    );
-  };
-
   PKey = () => {
     return (
       <div className="row my-1">
-        <div className="col-sm-2">
-          <span className="inline-span">Owner Private Key</span>
+        <div className="col-auto">
+          <span className="inline-span">Contract owner private key</span>
         </div>
 
-        <div className="col-sm-10">
+        <div className="col">
           <input
             type="text"
             className="form-control"
@@ -66,7 +40,13 @@ export class Auth extends React.Component {
       <div className="container Auth">
         <h4 id="Auth-title">{this.state.title}</h4>
         <div className="container">
-          <this.Owner />
+          <div className="row my-1">
+            <div className="col-auto">
+              <div class="alert alert-warning" role="alert">
+                You need contract owner private key to make writable contract calls, use at your own risk
+              </div>
+            </div>
+          </div>
           <this.PKey />
         </div>
       </div>

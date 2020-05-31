@@ -13,3 +13,9 @@
   padding: 5px;
   padding-left: 20px;
 }
+
+.alert-warning {
+  background-color: var(--warning-bg-color);
+  border-style: none;
+  color: var(--warning-text-color);
+}

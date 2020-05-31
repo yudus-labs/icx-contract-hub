@@ -16,7 +16,6 @@ const COPYRIGHT = "© 2020 duyyudus • ICONVIET";
 
 const TESTNET_ENDPOINT = "https://bicon.tracker.solidwallet.io/api/v3";
 const MAINNET_ENDPOINT = "https://ctz.tracker.solidwallet.io/api/v3";
-const DEFAULT_OWNER = "hxfafe76ab475a06b184587695327e72c04b4566a4";
 const DEFAULT_PKEY = "";
 const DEFAULT_CONTRACT = "cxa6ba8f0730ad952b5898ac3e5e90a17e20574eff";
 
@@ -96,7 +95,6 @@ class IcxExplorer extends React.Component {
     super(props);
     this.state = {
       endpoint: TESTNET_ENDPOINT,
-      owner: DEFAULT_OWNER,
       pkey: "",
       contract: DEFAULT_CONTRACT,
     };
@@ -122,7 +120,6 @@ class IcxExplorer extends React.Component {
           value={{
             explorerState: {
               endpoint: this.state.endpoint,
-              owner: this.state.owner,
               pkey: this.state.pkey,
               contract: this.state.contract,
             },
@@ -136,7 +133,6 @@ class IcxExplorer extends React.Component {
                 <Auth
                   title="Authentication"
                   endpoint={TESTNET_ENDPOINT}
-                  owner={DEFAULT_OWNER}
                   pkey={DEFAULT_PKEY}
                   contract={DEFAULT_CONTRACT}
                 />
