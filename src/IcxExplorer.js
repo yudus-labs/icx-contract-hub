@@ -67,20 +67,20 @@ function Header(props) {
                   className="dropdown-menu dropdown-menu-right"
                   aria-labelledby="dropdownMenuButton"
                 >
-                  <a
+                  <button
                     className="dropdown-item"
-                    href="#"
+                    type="button"
                     onClick={() => props.handleEndpointChange(TESTNET_ENDPOINT)}
                   >
                     Testnet
-                  </a>
-                  <a
+                  </button>
+                  <button
                     className="dropdown-item"
-                    href="#"
+                    type="button"
                     onClick={() => props.handleEndpointChange(MAINNET_ENDPOINT)}
                   >
                     Mainnet
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
