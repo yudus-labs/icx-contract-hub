@@ -196,6 +196,7 @@ export class ApiItem extends React.Component {
                           onChange={(e) =>
                             this.updateParamValue(param.name, e.target.value)
                           }
+                          required={true}
                         />
                       </div>
                     </div>

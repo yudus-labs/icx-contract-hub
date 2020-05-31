@@ -56,6 +56,7 @@ export class CheckTx extends React.Component {
                 }
               }}
               title="Press Enter to check"
+              required={true}
             />
           </div>
         </div>
@@ -101,7 +102,7 @@ class IcxLoopConverter extends React.Component {
         <div className="row">
           <div className="col-auto">
             <input
-              type="text"
+              type="number"
               className="form-control"
               value={this.state.icx}
               onChange={(e) => this.setState({ icx: e.target.value })}
@@ -119,7 +120,7 @@ class IcxLoopConverter extends React.Component {
           <div className="col-auto">{"<==>"}</div>
           <div className="col-auto">
             <input
-              type="text"
+              type="number"
               className="form-control"
               value={this.state.loops}
               onChange={(e) => this.setState({ loops: e.target.value })}
@@ -168,7 +169,7 @@ class HexConverter extends React.Component {
         <div className="row">
           <div className="col-auto">
             <input
-              type="text"
+              type="number"
               className="form-control"
               value={this.state.dec}
               onChange={(e) => this.setState({ dec: e.target.value })}
