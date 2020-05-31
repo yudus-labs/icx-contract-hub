@@ -11,7 +11,7 @@ ApiItem.contextType = ExplorerContext;
 ContractApi.contextType = ExplorerContext;
 
 const TITLE = "ICX Contract Explorer";
-const SUB_TITLE = "for ICON contract development";
+const SUB_TITLE = "dedicated for ICON contract developers";
 const COPYRIGHT = "© 2020 duyyudus • ICONVIET";
 
 const TESTNET_ENDPOINT = "https://bicon.tracker.solidwallet.io/api/v3";
@@ -37,10 +37,6 @@ function Header(props) {
         </div>
         <div className="col" id="IcxExplorer-endpoint">
           <div className="row">
-            <div className="col-auto">
-              <span className="inline-span">Endpoint</span>
-            </div>
-
             <div className="col">
               <input
                 type="text"
