@@ -1,12 +1,13 @@
 import React from "react";
 import { Auth } from "./Auth.js";
-import { Utility } from "./Utility.js";
+import { Utility, CheckTx } from "./Utility.js";
 import { ContractApi, ApiItem } from "./ContractApi.js";
 import "./css/IcxExplorer.css";
 
 const ExplorerContext = React.createContext();
 Auth.contextType = ExplorerContext;
 Utility.contextType = ExplorerContext;
+CheckTx.contextType = ExplorerContext;
 ApiItem.contextType = ExplorerContext;
 ContractApi.contextType = ExplorerContext;
 
@@ -14,8 +15,8 @@ const TITLE = "ICX Contract Explorer";
 const SUB_TITLE = "dedicated for ICON contract developers";
 const COPYRIGHT = "© 2020 duyyudus • ICONVIET";
 
-const TESTNET_ENDPOINT = "https://bicon.tracker.solidwallet.io/api/v3";
-const MAINNET_ENDPOINT = "https://ctz.tracker.solidwallet.io/api/v3";
+const TESTNET_ENDPOINT = "https://bicon.net.solidwallet.io/api/v3";
+const MAINNET_ENDPOINT = "https://ctz.solidwallet.io/api/v3";
 const DEFAULT_PKEY = "";
 const DEFAULT_CONTRACT = "cxa6ba8f0730ad952b5898ac3e5e90a17e20574eff";
 

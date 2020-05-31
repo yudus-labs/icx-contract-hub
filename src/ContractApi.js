@@ -1,6 +1,12 @@
 import React from "react";
 import "./css/ContractApi.css";
-import IconService from "icon-sdk-js";
+import IconService, {
+  HttpProvider,
+  IconBuilder,
+  IconConverter,
+  IconWallet,
+  SignedTransaction
+} from "icon-sdk-js";
 
 function Output(props) {
   return (
@@ -85,11 +91,11 @@ export class ApiItem extends React.Component {
     let result = "";
 
     try {
-      const provider = new IconService.HttpProvider(
+      const provider = new HttpProvider(
         this.context.explorerState.endpoint
       );
       const iconService = new IconService(provider);
-      const call = new IconService.IconBuilder.CallBuilder()
+      const call = new IconBuilder.CallBuilder()
         .to(this.context.explorerState.contract)
         .method(method)
         .params(params)
@@ -111,28 +117,26 @@ export class ApiItem extends React.Component {
     let txHash = "";
 
     try {
-      const provider = new IconService.HttpProvider(
-        this.context.explorerState.endpoint
-      );
+      const provider = new HttpProvider(this.context.explorerState.endpoint);
       const iconService = new IconService(provider);
 
-      const wallet = IconService.IconWallet.loadPrivateKey(
+      const wallet = IconWallet.loadPrivateKey(
         this.context.explorerState.pkey
       );
 
-      const transaction = new IconService.IconBuilder.CallTransactionBuilder()
+      const transaction = new IconBuilder.CallTransactionBuilder()
         .from(wallet.getAddress())
         .to(this.context.explorerState.contract)
-        .stepLimit(IconService.IconConverter.toBigNumber("5000000000"))
-        .nid(IconService.IconConverter.toBigNumber("3"))
-        .nonce(IconService.IconConverter.toBigNumber("1"))
-        .version(IconService.IconConverter.toBigNumber("3"))
+        .stepLimit(IconConverter.toBigNumber("5000000000"))
+        .nid(IconConverter.toBigNumber("3"))
+        .nonce(IconConverter.toBigNumber("1"))
+        .version(IconConverter.toBigNumber("3"))
         .timestamp(new Date().getTime() * 1000)
         .method(method)
         .params(params)
         .build();
 
-      const signedTx = new IconService.SignedTransaction(transaction, wallet);
+      const signedTx = new SignedTransaction(transaction, wallet);
 
       txHash = await iconService.sendTransaction(signedTx).execute();
     } catch (err) {
@@ -148,7 +152,7 @@ export class ApiItem extends React.Component {
     let txResult = "";
 
     try {
-      const provider = new IconService.HttpProvider(
+      const provider = new HttpProvider(
         this.context.explorerState.endpoint
       );
       const iconService = new IconService(provider);
@@ -242,9 +246,7 @@ export class ContractApi extends React.Component {
 
   async fetchMethods() {
     try {
-      const provider = new IconService.HttpProvider(
-        this.context.explorerState.endpoint
-      );
+      const provider = new HttpProvider(this.context.explorerState.endpoint);
       const iconService = new IconService(provider);
       const apiList = await iconService
         .getScoreApi(this.context.explorerState.contract)

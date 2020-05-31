@@ -1,4 +1,5 @@
 @import "common.css";
+
 .inline-span {
   white-space: nowrap;
 }
@@ -8,4 +9,10 @@
   color: white;
   padding: 5px;
   padding-left: 20px;
+}
+
+.utility-label {
+  background-color: var(--background-dark-1);
+  color: var(--background-darkest);
+  padding: 5px;
 }

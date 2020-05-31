@@ -42,7 +42,7 @@ export class Auth extends React.Component {
         <div className="container">
           <div className="row my-1">
             <div className="col-auto">
-              <div class="alert alert-warning" role="alert">
+              <div className="alert alert-warning" role="alert">
                 You need contract owner private key to make writable contract calls, use at your own risk
               </div>
             </div>

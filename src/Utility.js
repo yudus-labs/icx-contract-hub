@@ -1,5 +1,78 @@
 import React from "react";
 import "./css/Utility.css";
+import IconService, { HttpProvider } from "icon-sdk-js";
+
+export class CheckTx extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      txHash: "",
+      txResult: "",
+    };
+  }
+  async checkTx(txHash) {
+    let txResult = "";
+
+    try {
+      const provider = new HttpProvider(this.context.explorerState.endpoint);
+      const iconService = new IconService(provider);
+      txResult = await iconService.getTransactionResult(txHash).execute();
+    } catch (err) {
+      txResult = err;
+    }
+
+    this.setState({
+      txResult: txResult,
+    });
+  }
+
+  render() {
+    return (
+      <div className="container IcxLoopConverter">
+        <h6 className="utility-label">Check transaction result</h6>
+
+        <div className="row my-1">
+          <div className="col-auto">
+            <div
+              type="button"
+              className="btn btn-primary btn-sm"
+              onClick={async () => this.checkTx(this.state.txHash)}
+            >
+              Check result of TX hash ->
+            </div>
+          </div>
+
+          <div className="col">
+            <input
+              type="text"
+              className="form-control"
+              value={this.state.txHash}
+              onChange={(e) => {
+                this.setState({ txHash: e.target.value });
+              }}
+              onKeyPress={async (e) => {
+                if (e.key === "Enter") {
+                  this.checkTx(e.target.value);
+                }
+              }}
+              title="Press Enter to check"
+            />
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col">
+            <textarea
+              value={JSON.stringify(this.state.txResult, null, 2)}
+              readOnly={true}
+              className="form-control text-area"
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
 
 class IcxLoopConverter extends React.Component {
   constructor(props) {
@@ -22,9 +95,9 @@ class IcxLoopConverter extends React.Component {
   render() {
     return (
       <div className="container IcxLoopConverter">
-        <h5>
+        <h6 className="utility-label">
           Convert <code>ICX</code> to/from <code>loops</code>
-        </h5>
+        </h6>
         <div className="row">
           <div className="col-auto">
             <input
@@ -89,9 +162,9 @@ class HexConverter extends React.Component {
   render() {
     return (
       <div className="container IcxLoopConverter">
-        <h5>
+        <h6 className="utility-label">
           Convert <code>decimal</code> to/from <code>hex</code>
-        </h5>
+        </h6>
         <div className="row">
           <div className="col-auto">
             <input
@@ -154,6 +227,10 @@ export class Utility extends React.Component {
           <br />
           <div className="row">
             <HexConverter />
+          </div>
+          <br />
+          <div className="row">
+            <CheckTx />
           </div>
         </div>
       </div>
