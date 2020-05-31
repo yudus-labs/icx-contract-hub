@@ -19,16 +19,13 @@ export class Auth extends React.Component {
   PKey = () => {
     return (
       <div className="row my-1">
-        <div className="col-auto">
-          <span className="inline-span">Contract owner private key</span>
-        </div>
-
         <div className="col">
           <input
             type="text"
             className="form-control"
             value={this.state.pkey}
             onChange={this.handlePKeyChange}
+            placeholder="Input contract owner private key here"
           />
         </div>
       </div>
@@ -43,7 +40,8 @@ export class Auth extends React.Component {
           <div className="row my-1">
             <div className="col-auto">
               <div className="alert alert-warning" role="alert">
-                You need contract owner private key to make writable contract calls, use at your own risk
+                You need contract owner private key to make writable contract
+                calls, use at your own risk
               </div>
             </div>
           </div>

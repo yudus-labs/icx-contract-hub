@@ -65,3 +65,9 @@
   border-style: none;
   color: var(--error-text-color);
 }
+
+.alert-success {
+  background-color: var(--success-bg-color);
+  border-style: none;
+  color: var(--success-text-color);
+}

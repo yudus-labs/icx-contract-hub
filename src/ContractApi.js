@@ -5,7 +5,7 @@ import IconService, {
   IconBuilder,
   IconConverter,
   IconWallet,
-  SignedTransaction
+  SignedTransaction,
 } from "icon-sdk-js";
 
 function Output(props) {
@@ -91,9 +91,7 @@ export class ApiItem extends React.Component {
     let result = "";
 
     try {
-      const provider = new HttpProvider(
-        this.context.explorerState.endpoint
-      );
+      const provider = new HttpProvider(this.context.explorerState.endpoint);
       const iconService = new IconService(provider);
       const call = new IconBuilder.CallBuilder()
         .to(this.context.explorerState.contract)
@@ -120,9 +118,7 @@ export class ApiItem extends React.Component {
       const provider = new HttpProvider(this.context.explorerState.endpoint);
       const iconService = new IconService(provider);
 
-      const wallet = IconWallet.loadPrivateKey(
-        this.context.explorerState.pkey
-      );
+      const wallet = IconWallet.loadPrivateKey(this.context.explorerState.pkey);
 
       const transaction = new IconBuilder.CallTransactionBuilder()
         .from(wallet.getAddress())
@@ -152,9 +148,7 @@ export class ApiItem extends React.Component {
     let txResult = "";
 
     try {
-      const provider = new HttpProvider(
-        this.context.explorerState.endpoint
-      );
+      const provider = new HttpProvider(this.context.explorerState.endpoint);
       const iconService = new IconService(provider);
       txResult = await iconService.getTransactionResult(txHash).execute();
     } catch (err) {
@@ -238,6 +232,7 @@ export class ContractApi extends React.Component {
       readonlyMethods: [],
       methods: [],
       invalidContractError: "",
+      contractName: "",
     };
   }
 
@@ -269,6 +264,20 @@ export class ContractApi extends React.Component {
         readonlyMethods: readonlyMethods,
         invalidContractError: "",
       });
+
+      // Get contract name, if any
+      try {
+        const call = new IconBuilder.CallBuilder()
+          .to(this.context.explorerState.contract)
+          .method("name")
+          .params({})
+          .build();
+        const cxName = await iconService.call(call).execute();
+        this.setState({ contractName: cxName });
+      } catch (err) {
+        console.log("Failed to get contract name: " + err);
+        this.setState({ contractName: "" });
+      }
     } catch (err) {
       this.setState({ invalidContractError: err });
     }
@@ -284,7 +293,13 @@ export class ContractApi extends React.Component {
         <div className="container-fluid">
           <div className="row my-4">
             <div className="col-auto">
-              <span className="inline-span">Contract address</span>
+              <div
+                type="button"
+                className="btn btn-secondary btn-sm"
+                onClick={async () => this.fetchMethods()}
+              >
+                Refresh
+              </div>
             </div>
 
             <div className="col-sm-4">
@@ -302,17 +317,27 @@ export class ContractApi extends React.Component {
                   }
                 }}
                 title="Press Enter to refresh contract API list"
+                placeholder="Contract address here"
+                required
               />
             </div>
+
             <div className="col-auto">
-              <div
-                type="button"
-                className="btn btn-secondary btn-sm"
-                onClick={async () => this.fetchMethods()}
-              >
-                Refresh
-              </div>
+              {!this.state.invalidContractError ? (
+                this.state.contractName ? (
+                  <div className="alert alert-success" role="alert">
+                    Contract name : <b>{this.state.contractName}</b>
+                  </div>
+                ) : (
+                  <div className="alert alert-warning" role="alert">
+                    This contract has no name
+                  </div>
+                )
+              ) : (
+                ""
+              )}
             </div>
+
             <div className="col-auto">
               {this.state.invalidContractError ? (
                 <div className="alert alert-error" role="alert">
