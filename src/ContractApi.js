@@ -34,7 +34,7 @@ function Output(props) {
         <div className="row">
           <div className="col">
             {props.txHash ? "" : <br />}
-            <h6>Call / Tx result</h6>
+            <h6>{props.txHash ? "Transaction result" : "Call result"}</h6>
             <textarea
               value={JSON.stringify(props.callResult, null, 2)}
               readOnly={true}
