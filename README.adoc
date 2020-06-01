@@ -1,5 +1,5 @@
-# ICX Explorer Lite
+# ICX Contract Explorer
 
-Alternative chain explorer for smart contract development on ICON blockchains.
+A developer-oriented explorer dedicated for smart contract development on ICON blockchain network
 
-In progress...
+image::docs/icx-ce.png[]
