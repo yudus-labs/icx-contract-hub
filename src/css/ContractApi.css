@@ -86,3 +86,17 @@
   padding: 3px 10px 3px 10px;
   border-radius: 5px;
 }
+
+.succeed-result-title {
+  background-color: var(--success-bg-color);
+  color: var(--success-text-color);
+  height: 35px;
+  padding: 5px 10px 2px 10px;
+}
+
+.error-result-title {
+  background-color: var(--warning-bg-color);
+  color: var(--warning-text-color);
+  height: 35px;
+  padding: 5px 10px 2px 10px;
+}

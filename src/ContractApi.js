@@ -8,6 +8,55 @@ import IconService, {
   SignedTransaction,
 } from "icon-sdk-js";
 
+function TxResultTitle(props) {
+  if (props.checkFailed) {
+    var title = "Failed to check Tx result";
+    var cssClass = "error-result-title";
+  } else {
+    title = "Tx failed";
+    cssClass = "error-result-title";
+    if (typeof props.result === "object" && props.result !== null) {
+      if (props.result.hasOwnProperty("status")) {
+        if (props.result["status"]) {
+          title = "Tx succeed";
+          cssClass = "succeed-result-title";
+        }
+      }
+    }
+  }
+  return (
+    <div className="row">
+      <div className="col-auto">
+        <h6 className={cssClass}>{title}</h6>
+      </div>
+    </div>
+  );
+}
+
+function TxTitle(props) {
+  const cssClass = props.txError
+    ? "error-result-title"
+    : "succeed-result-title";
+  return (
+    <h6 className={cssClass}>
+      {props.txError ? "Failed to send Tx" : "Tx hash below"}
+    </h6>
+  );
+}
+
+function CallResultTitle(props) {
+  const cssClass = props.failed ? "error-result-title" : "succeed-result-title";
+  return (
+    <div className="row">
+      <div className="col-auto">
+        <h6 className={cssClass}>
+          {props.failed ? "Call error" : "Call succeed"}
+        </h6>
+      </div>
+    </div>
+  );
+}
+
 function Output(props) {
   return (
     <div className="container">
@@ -15,12 +64,19 @@ function Output(props) {
         <div className="row">
           <div className="col">
             <br />
-            <div
-              type="button"
-              className="btn btn-secondary checktx-button"
-              onClick={props.checkTx}
-            >
-              TX hash below, click here to check its result
+            <div className="row">
+              <div className="col-auto">
+                <TxTitle txError={props.txError} />
+              </div>
+              <div className="col-auto">
+                <div
+                  type="button"
+                  className="btn btn-secondary checktx-button"
+                  onClick={props.checkTx}
+                >
+                  Check Tx
+                </div>
+              </div>
             </div>
 
             <textarea
@@ -40,9 +96,30 @@ function Output(props) {
         <div className="row">
           <div className="col">
             {props.txHash ? "" : <br />}
-            <h6>{props.txHash ? "Transaction result" : "Call result"}</h6>
+            <CallResultTitle failed={props.callFailed} />
             <textarea
               value={JSON.stringify(props.callResult, null, 2)}
+              readOnly={true}
+              rows="4"
+              className="form-control text-area"
+            />
+            <br />
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+
+      {props.txResult ? (
+        <div className="row">
+          <div className="col">
+            {props.txHash ? "" : <br />}
+            <TxResultTitle
+              checkFailed={props.txCheckFailed}
+              result={props.txResult}
+            />
+            <textarea
+              value={JSON.stringify(props.txResult, null, 2)}
               readOnly={true}
               rows="4"
               className="form-control text-area"
@@ -65,8 +142,14 @@ export class ApiItem extends React.Component {
       methodParams: props.methodParams,
       readonly: props.readonly,
       paramValues: {},
+
       txHash: "",
+      txError: false,
+      txCheckFailed: false,
+      txResult: "",
+
       callResult: "",
+      callFailed: false,
     };
   }
 
@@ -89,6 +172,7 @@ export class ApiItem extends React.Component {
     console.log(`..with params: ${JSON.stringify(params)}`);
 
     let result = "";
+    let failed;
 
     try {
       const provider = new HttpProvider(this.context.explorerState.endpoint);
@@ -99,11 +183,13 @@ export class ApiItem extends React.Component {
         .params(params)
         .build();
       result = await iconService.call(call).execute();
+      failed = false;
     } catch (err) {
       result = err;
+      failed = true;
     }
 
-    this.setState({ callResult: result, txHash: "" });
+    this.setState({ callResult: result, callFailed: failed, txHash: "" });
 
     console.log("Call result: " + result);
   }
@@ -113,6 +199,7 @@ export class ApiItem extends React.Component {
     console.log(`..with params: ${JSON.stringify(params)}`);
 
     let txHash = "";
+    let failed;
 
     try {
       const provider = new HttpProvider(this.context.explorerState.endpoint);
@@ -135,28 +222,34 @@ export class ApiItem extends React.Component {
       const signedTx = new SignedTransaction(transaction, wallet);
 
       txHash = await iconService.sendTransaction(signedTx).execute();
+      failed = false;
     } catch (err) {
       txHash = err;
+      failed = true;
     }
 
-    this.setState({ callResult: "", txHash: txHash });
+    this.setState({ callResult: "", txHash: txHash, txError: failed });
 
     console.log("Call Tx: " + txHash);
   }
 
   async checkTx(txHash) {
     let txResult = "";
+    let failed = false;
 
     try {
       const provider = new HttpProvider(this.context.explorerState.endpoint);
       const iconService = new IconService(provider);
       txResult = await iconService.getTransactionResult(txHash).execute();
+      failed = false;
     } catch (err) {
       txResult = err;
+      failed = true;
     }
 
     this.setState({
-      callResult: txResult,
+      txResult: txResult,
+      txCheckFailed: failed,
     });
   }
 
@@ -200,8 +293,12 @@ export class ApiItem extends React.Component {
             : ""}
 
           <Output
+            callFailed={this.state.callFailed}
             callResult={this.state.callResult}
             txHash={this.state.txHash}
+            txError={this.state.txError}
+            txCheckFailed={this.state.txCheckFailed}
+            txResult={this.state.txResult}
             checkTx={async () => this.checkTx(this.state.txHash)}
           />
         </div>
