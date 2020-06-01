@@ -71,3 +71,18 @@
   border-style: none;
   color: var(--success-text-color);
 }
+
+.contract-name {
+  background-color: var(--success-bg-color);
+  ;
+  color: var(--success-text-color);
+  padding: 3px 10px 3px 10px;
+  border-radius: 5px;
+}
+
+.no-contract-name {
+  background-color: var(--warning-bg-color);
+  color: var(--warning-text-color);
+  padding: 3px 10px 3px 10px;
+  border-radius: 5px;
+}

@@ -233,11 +233,14 @@ export class ContractApi extends React.Component {
       methods: [],
       invalidContractError: "",
       contractName: "",
+      noContract: true,
     };
   }
 
   async componentDidMount() {
-    await this.fetchMethods();
+    if (this.context.explorerState.contract) {
+      await this.fetchMethods();
+    }
   }
 
   async fetchMethods() {
@@ -278,6 +281,10 @@ export class ContractApi extends React.Component {
         console.log("Failed to get contract name: " + err);
         this.setState({ contractName: "" });
       }
+
+      // Loaded contract
+      this.setState({ noContract: false });
+      // Finished
     } catch (err) {
       this.setState({ invalidContractError: err });
     }
@@ -293,13 +300,19 @@ export class ContractApi extends React.Component {
         <div className="container-fluid">
           <div className="row my-4">
             <div className="col-auto">
-              <div
-                type="button"
-                className="btn btn-secondary btn-sm"
-                onClick={async () => this.fetchMethods()}
-              >
-                Refresh
-              </div>
+              {!this.state.noContract ? (
+                this.state.contractName ? (
+                  <div className="contract-name">
+                    Contract name : <b>{this.state.contractName}</b>
+                  </div>
+                ) : (
+                  <div className="no-contract-name">
+                    This contract has no name
+                  </div>
+                )
+              ) : (
+                <div className="no-contract-name">No contract</div>
+              )}
             </div>
 
             <div className="col-sm-4">
@@ -320,25 +333,7 @@ export class ContractApi extends React.Component {
                 placeholder="Contract address here"
                 required
               />
-            </div>
 
-            <div className="col-auto">
-              {!this.state.invalidContractError ? (
-                this.state.contractName ? (
-                  <div className="alert alert-success" role="alert">
-                    Contract name : <b>{this.state.contractName}</b>
-                  </div>
-                ) : (
-                  <div className="alert alert-warning" role="alert">
-                    This contract has no name
-                  </div>
-                )
-              ) : (
-                ""
-              )}
-            </div>
-
-            <div className="col-auto">
               {this.state.invalidContractError ? (
                 <div className="alert alert-error" role="alert">
                   {this.state.invalidContractError}
@@ -346,6 +341,16 @@ export class ContractApi extends React.Component {
               ) : (
                 ""
               )}
+            </div>
+
+            <div className="col-auto">
+              <div
+                type="button"
+                className="btn btn-secondary btn-sm"
+                onClick={async () => this.fetchMethods()}
+              >
+                Refresh
+              </div>
             </div>
           </div>
 
