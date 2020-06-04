@@ -143,6 +143,8 @@ export class ApiItem extends React.Component {
       readonly: props.readonly,
       paramValues: {},
 
+      fetching: false,
+
       txHash: "",
       txError: false,
       txCheckFailed: false,
@@ -154,6 +156,8 @@ export class ApiItem extends React.Component {
   }
 
   handleClick = async () => {
+    this.setState({ fetching: true });
+
     if (this.state.readonly) {
       this.call(this.state.methodName, this.state.paramValues);
     } else {
@@ -189,7 +193,12 @@ export class ApiItem extends React.Component {
       failed = true;
     }
 
-    this.setState({ callResult: result, callFailed: failed, txHash: "" });
+    this.setState({
+      callResult: result || "Undefined",
+      callFailed: failed,
+      txHash: "",
+      fetching: false,
+    });
 
     console.log("Call result: " + result);
   }
@@ -240,7 +249,12 @@ export class ApiItem extends React.Component {
       failed = true;
     }
 
-    this.setState({ callResult: "", txHash: txHash, txError: failed });
+    this.setState({
+      callResult: "",
+      txHash: txHash,
+      txError: failed,
+      fetching: false,
+    });
 
     console.log("Call Tx: " + txHash);
   }
@@ -277,6 +291,12 @@ export class ApiItem extends React.Component {
             >
               {this.state.methodName}
             </div>
+
+            {this.state.fetching ? (
+              <div className="fetching">Calling...</div>
+            ) : (
+              ""
+            )}
           </div>
 
           {this.state.methodParams.length > 0
@@ -285,7 +305,7 @@ export class ApiItem extends React.Component {
                   <div className="col">
                     <div className="row">
                       <div className="col-auto">
-                        <var>{param.name}</var> : <code>{param.type}</code>
+                        <var className="param-name">{param.name}</var> : <code>{param.type}</code>
                       </div>
                       <div className="col">
                         <input
@@ -343,6 +363,7 @@ export class ContractApi extends React.Component {
       invalidContractError: "",
       contractName: "",
       noContract: true,
+      fetching: false,
     };
   }
 
@@ -353,6 +374,8 @@ export class ContractApi extends React.Component {
   }
 
   async fetchMethods() {
+    this.setState({ fetching: true });
+
     try {
       const provider = new HttpProvider(this.context.explorerState.endpoint);
       const iconService = new IconService(provider);
@@ -397,6 +420,8 @@ export class ContractApi extends React.Component {
     } catch (err) {
       this.setState({ invalidContractError: err });
     }
+
+    this.setState({ fetching: false });
 
     // console.log("API list: " + JSON.stringify(apiList.getList(), null, 2));
     // console.log("API list: " + JSON.stringify(methods, null, 2));
@@ -461,6 +486,12 @@ export class ContractApi extends React.Component {
                 Refresh
               </div>
             </div>
+
+            {this.state.fetching ? (
+              <div className="fetching">Fetching contract APIs...</div>
+            ) : (
+              ""
+            )}
           </div>
 
           <div className="row">

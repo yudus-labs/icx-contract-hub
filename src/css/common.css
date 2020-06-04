@@ -14,9 +14,12 @@
   --background-dark-3: rgb(132, 145, 148);
   --background-darkest: rgb(39, 43, 44);
 
-  --success-bg-color: #b2df9c;
+  --success-bg-color: #add498;
+  --success-bg-color-dark: #8ba87a;
   --error-bg-color: #df7c68;
+  --error-bg-color-dark: #b36353;
   --warning-bg-color: #dfbab3;
+  --warning-bg-color-dark: #88726f;
 
   --success-text-color: #3d5531;
   --error-text-color: #331b17;

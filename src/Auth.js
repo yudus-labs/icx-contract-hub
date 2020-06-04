@@ -24,7 +24,7 @@ export class Auth extends React.Component {
             className="form-control"
             value={this.context.explorerState.pkey}
             onChange={this.handlePKeyChange}
-            placeholder="Input contract owner private key here"
+            placeholder="Enter contract owner private key here"
           />
         </div>
       </div>
@@ -46,7 +46,7 @@ export class Auth extends React.Component {
             className="form-control"
             value={this.context.explorerState.keystore}
             onChange={this.handleKeystoreChange}
-            placeholder="or input contract owner keystore content here"
+            placeholder="or contract owner keystore content here"
           />
         </div>
       </div>
@@ -68,7 +68,7 @@ export class Auth extends React.Component {
             className="form-control"
             value={this.context.explorerState.keystorePass}
             onChange={this.handleKeystorePassChange}
-            placeholder="Keystore password"
+            placeholder="and keystore password"
           />
         </div>
       </div>

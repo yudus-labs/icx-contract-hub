@@ -19,8 +19,8 @@ const TESTNET_ENDPOINT = "https://bicon.net.solidwallet.io/api/v3";
 const MAINNET_ENDPOINT = "https://ctz.solidwallet.io/api/v3";
 const TESTNET_NID = "3";
 const MAINNET_NID = "1";
-const DEFAULT_CONTRACT = "cxa6ba8f0730ad952b5898ac3e5e90a17e20574eff";
-// const DEFAULT_CONTRACT = "";
+// const DEFAULT_CONTRACT = "cxa6ba8f0730ad952b5898ac3e5e90a17e20574eff";
+const DEFAULT_CONTRACT = "";
 
 function Header(props) {
   return (

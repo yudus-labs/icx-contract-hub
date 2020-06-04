@@ -9,7 +9,7 @@
 }
 
 .btn-primary:active {
-  background-color: var(--main-color-dark-3) !important;
+  background-color: var(--main-color-dark-4) !important;
 }
 
 .btn-secondary {
@@ -22,7 +22,7 @@
 }
 
 .btn-secondary:active {
-  background-color: var(--main-color-dark-3) !important;
+  background-color: var(--main-color-dark-4) !important;
 }
 
 .ApiItem {
@@ -37,6 +37,10 @@
 
 .param-input {
   height: 30px;
+}
+
+.param-name {
+  color: var(--main-color-dark-4);
 }
 
 .checktx-button {
@@ -92,6 +96,10 @@
   color: var(--success-text-color);
   height: 35px;
   padding: 5px 10px 2px 10px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: var(--success-bg-color-dark);
+  border-radius: 5px;
 }
 
 .error-result-title {
@@ -99,4 +107,15 @@
   color: var(--warning-text-color);
   height: 35px;
   padding: 5px 10px 2px 10px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: var(--error-bg-color-dark);
+  border-radius: 5px;
+}
+
+.fetching {
+  margin-left: 10px;
+  margin-top: 5px;
+  font-style: italic;
+  color: var(--main-color-dark-4);
 }
