@@ -205,13 +205,25 @@ export class ApiItem extends React.Component {
       const provider = new HttpProvider(this.context.explorerState.endpoint);
       const iconService = new IconService(provider);
 
-      const wallet = IconWallet.loadPrivateKey(this.context.explorerState.pkey);
+      let wallet = null;
+      if (this.context.explorerState.pkey) {
+        wallet = IconWallet.loadPrivateKey(this.context.explorerState.pkey);
+      } else if (this.context.explorerState.keystore) {
+        wallet = IconWallet.loadKeystore(
+          JSON.parse(this.context.explorerState.keystore),
+          this.context.explorerState.keystorePass
+        );
+      }
+
+      if (!wallet) {
+        throw new Error("Please provide contract owner authentication info");
+      }
 
       const transaction = new IconBuilder.CallTransactionBuilder()
         .from(wallet.getAddress())
         .to(this.context.explorerState.contract)
         .stepLimit(IconConverter.toBigNumber("5000000000"))
-        .nid(IconConverter.toBigNumber("3"))
+        .nid(IconConverter.toBigNumber(this.context.explorerState.nid))
         .nonce(IconConverter.toBigNumber("1"))
         .version(IconConverter.toBigNumber("3"))
         .timestamp(new Date().getTime() * 1000)

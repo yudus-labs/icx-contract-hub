@@ -17,7 +17,8 @@ const COPYRIGHT = "© 2020 duyyudus • ICONVIET";
 
 const TESTNET_ENDPOINT = "https://bicon.net.solidwallet.io/api/v3";
 const MAINNET_ENDPOINT = "https://ctz.solidwallet.io/api/v3";
-const DEFAULT_PKEY = "";
+const TESTNET_NID = "3";
+const MAINNET_NID = "1";
 const DEFAULT_CONTRACT = "cxa6ba8f0730ad952b5898ac3e5e90a17e20574eff";
 // const DEFAULT_CONTRACT = "";
 
@@ -45,7 +46,9 @@ function Header(props) {
                 className="form-control"
                 id="endpoint-input"
                 value={props.endpoint}
-                onChange={(e) => props.handleEndpointChange(e.target.value)}
+                onChange={(e) =>
+                  props.handleEndpointChange(e.target.value, TESTNET_NID)
+                }
               />
             </div>
             <div className="col-auto">
@@ -67,14 +70,18 @@ function Header(props) {
                   <button
                     className="dropdown-item"
                     type="button"
-                    onClick={() => props.handleEndpointChange(TESTNET_ENDPOINT)}
+                    onClick={() =>
+                      props.handleEndpointChange(TESTNET_ENDPOINT, TESTNET_NID)
+                    }
                   >
                     Testnet
                   </button>
                   <button
                     className="dropdown-item"
                     type="button"
-                    onClick={() => props.handleEndpointChange(MAINNET_ENDPOINT)}
+                    onClick={() =>
+                      props.handleEndpointChange(MAINNET_ENDPOINT, MAINNET_NID)
+                    }
                   >
                     Mainnet
                   </button>
@@ -93,7 +100,10 @@ class IcxExplorer extends React.Component {
     super(props);
     this.state = {
       endpoint: TESTNET_ENDPOINT,
+      nid: TESTNET_NID,
       pkey: "",
+      keystore: "",
+      keystorePass: "",
       contract: DEFAULT_CONTRACT,
     };
   }
@@ -102,8 +112,8 @@ class IcxExplorer extends React.Component {
     this.setState(data);
   };
 
-  handleEndpointChange = (newEndpoint) => {
-    this.setState({ endpoint: newEndpoint });
+  handleEndpointChange = (newEndpoint, newNid) => {
+    this.setState({ endpoint: newEndpoint, nid: newNid });
   };
 
   render() {
@@ -118,7 +128,10 @@ class IcxExplorer extends React.Component {
           value={{
             explorerState: {
               endpoint: this.state.endpoint,
+              nid: this.state.nid,
               pkey: this.state.pkey,
+              keystore: this.state.keystore,
+              keystorePass: this.state.keystorePass,
               contract: this.state.contract,
             },
             updateExplorerState: this.updateExplorerState,
@@ -128,12 +141,7 @@ class IcxExplorer extends React.Component {
             <br />
             <div className="row">
               <div className="col">
-                <Auth
-                  title="Authentication"
-                  endpoint={TESTNET_ENDPOINT}
-                  pkey={DEFAULT_PKEY}
-                  contract={DEFAULT_CONTRACT}
-                />
+                <Auth title="Authentication" />
               </div>
               <div className="col">
                 <Utility title="Utilities" />
