@@ -1,4 +1,6 @@
 import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
 import { Auth } from "./Auth.js";
 import { Utility, CheckTx } from "./Utility.js";
 import { ContractApi, ApiItem } from "./ContractApi.js";
@@ -118,41 +120,47 @@ class IcxExplorer extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid IcxExplorer">
-        <Header
-          endpoint={this.state.endpoint}
-          handleEndpointChange={this.handleEndpointChange}
-        />
+      <Router>
+        <Switch>
+          <Route path="/icxce">
+            <div className="container-fluid IcxExplorer">
+              <Header
+                endpoint={this.state.endpoint}
+                handleEndpointChange={this.handleEndpointChange}
+              />
 
-        <ExplorerContext.Provider
-          value={{
-            explorerState: {
-              endpoint: this.state.endpoint,
-              nid: this.state.nid,
-              pkey: this.state.pkey,
-              keystore: this.state.keystore,
-              keystorePass: this.state.keystorePass,
-              contract: this.state.contract,
-            },
-            updateExplorerState: this.updateExplorerState,
-          }}
-        >
-          <div className="container-fluid" id="IcxExplorer-body">
-            <br />
-            <div className="row">
-              <div className="col">
-                <Auth title="Authentication" />
-              </div>
-              <div className="col">
-                <Utility title="Utilities" />
-              </div>
+              <ExplorerContext.Provider
+                value={{
+                  explorerState: {
+                    endpoint: this.state.endpoint,
+                    nid: this.state.nid,
+                    pkey: this.state.pkey,
+                    keystore: this.state.keystore,
+                    keystorePass: this.state.keystorePass,
+                    contract: this.state.contract,
+                  },
+                  updateExplorerState: this.updateExplorerState,
+                }}
+              >
+                <div className="container-fluid" id="IcxExplorer-body">
+                  <br />
+                  <div className="row">
+                    <div className="col">
+                      <Auth title="Authentication" />
+                    </div>
+                    <div className="col">
+                      <Utility title="Utilities" />
+                    </div>
+                  </div>
+                  <br />
+                  <ContractApi title="Contract APIs" />
+                  <br />
+                </div>
+              </ExplorerContext.Provider>
             </div>
-            <br />
-            <ContractApi title="Contract APIs" />
-            <br />
-          </div>
-        </ExplorerContext.Provider>
-      </div>
+          </Route>
+        </Switch>
+      </Router>
     );
   }
 }

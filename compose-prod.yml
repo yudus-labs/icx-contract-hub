@@ -1,0 +1,11 @@
+version: '3'
+services:
+  icx_contract_explorer:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    image: duyyudus/icx-contract-explorer
+    container_name: icx-contract-explorer-prod
+    restart: always
+    ports:
+      - 3000:80
