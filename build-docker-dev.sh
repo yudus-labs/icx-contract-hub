@@ -1,1 +1,0 @@
-sudo docker-compose -f compose-dev.yml build
