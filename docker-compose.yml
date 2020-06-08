@@ -1,6 +1,6 @@
 version: '3'
 services:
-  icx_contract_explorer:
+  icx-contract-explorer:
     build:
       context: .
       dockerfile: Dockerfile
@@ -8,4 +8,4 @@ services:
     container_name: icx-contract-explorer
     restart: always
     ports:
-      - 8030:8030
+      - 8030:80
