@@ -1,27 +1,29 @@
 :root {
-  --main-color: #6aacb9;
-  --main-color-lighter: #82cfdf;
-  --main-color-lightest: rgb(180, 233, 243);
-  --main-color-dark-1: rgb(90, 147, 158);
-  --main-color-dark-2: rgb(77, 125, 134);
-  --main-color-dark-3: rgb(65, 107, 114);
-  --main-color-dark-4: rgb(52, 86, 92);
+  --primary-bg-white: #fafafa;
+  --primary-bg-light: #edf1f2;
+  --primary-bg-1: #e1e5e6;
+  --primary-bg-2: #c8cbcc;
+  --primary-bg-text: #4b4c4d;
 
-  --background: rgb(223, 233, 235);
-  --background-lighter: rgb(222, 239, 241);
-  --background-dark-1: rgb(188, 207, 211);
-  --background-dark-2: rgb(163, 179, 182);
-  --background-dark-3: rgb(132, 145, 148);
-  --background-darkest: rgb(39, 43, 44);
+  --primary-bg-dark: #919899;
+  --primary-bg-dark-text: #ffffff;
 
-  --success-bg-color: #add498;
-  --success-bg-color-dark: #8ba87a;
-  --error-bg-color: #df7c68;
-  --error-bg-color-dark: #b36353;
-  --warning-bg-color: #dfbab3;
-  --warning-bg-color-dark: #88726f;
+  --primary-main-1: #57c3d9;
+  --primary-main-2: #47a1b3;
+  --primary-main-3: #337380;
+  --primary-main-text: #ffffff;
 
-  --success-text-color: #3d5531;
-  --error-text-color: #331b17;
-  --warning-text-color: #2b2321;
+  --primary-dark: #1f454d;
+  --primary-dark-text: #e6f0f2;
+
+  --secondary-cool-1: #b8e6d2;
+  --secondary-cool-dark-text: #494d4b;
+
+  --secondary-cool-2: #66cca1;
+  --secondary-cool-3: #36b37e;
+  --secondary-cool-text: #f2fffa;
+
+  --secondary-hot-2: #e68873;
+  --secondary-hot-3: #e65939;
+  --secondary-hot-text: #f2e8e6;
 }

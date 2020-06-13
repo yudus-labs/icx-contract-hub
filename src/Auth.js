@@ -83,8 +83,8 @@ export class Auth extends React.Component {
           <div className="row my-1">
             <div className="col-auto">
               <div className="alert alert-warning" role="alert">
-                You need contract owner access to make writable contract calls,
-                use at your own risk
+                You need contract owner access to make <b>writable</b> contract
+                calls, use at your own risk
               </div>
             </div>
           </div>

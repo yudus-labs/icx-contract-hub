@@ -8,14 +8,14 @@
 }
 
 #Auth-title {
-  background-color: var(--main-color-dark-2);
-  color: white;
+  background-color: var(--primary-bg-dark);
+  color: var(--primary-bg-dark-text);
   padding: 5px;
   padding-left: 20px;
 }
 
 .alert-warning {
-  background-color: var(--warning-bg-color);
+  background-color: var(--secondary-cool-1);
+  color: var(--secondary-cool-dark-text);
   border-style: none;
-  color: var(--warning-text-color);
 }

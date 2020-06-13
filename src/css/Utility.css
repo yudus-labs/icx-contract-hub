@@ -5,14 +5,14 @@
 }
 
 #Utility-title {
-  background-color: var(--main-color-dark-2);
-  color: white;
+  background-color: var(--primary-bg-dark);
+  color: var(--primary-bg-dark-text);
   padding: 5px;
   padding-left: 20px;
 }
 
 .utility-label {
-  background-color: var(--background-dark-1);
-  color: var(--background-darkest);
+  background-color: var(--primary-bg-2);
+  color: var(--primary-bg-text);
   padding: 5px;
 }

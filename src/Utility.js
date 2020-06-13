@@ -107,9 +107,7 @@ class UnitConverter extends React.Component {
   render() {
     return (
       <div className="container UnitConverter">
-        <h6 className="utility-label">
-          Unit convert
-        </h6>
+        <h6 className="utility-label">Unit convert</h6>
         <div className="row my-1">
           <div className="col-auto">
             <input
@@ -145,8 +143,7 @@ class UnitConverter extends React.Component {
           </div>
         </div>
 
-
-        <div className="row my-1">
+        <div className="row my-2">
           <div className="col-auto">
             <input
               type="number"

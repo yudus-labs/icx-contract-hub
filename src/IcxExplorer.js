@@ -6,6 +6,8 @@ import { Utility, CheckTx } from "./Utility.js";
 import { ContractApi, ApiItem } from "./ContractApi.js";
 import "./css/IcxExplorer.css";
 
+const LOGO = require("./images/yudus-lab-1-small.png");
+
 const ExplorerContext = React.createContext();
 Auth.contextType = ExplorerContext;
 Utility.contextType = ExplorerContext;
@@ -15,7 +17,7 @@ ContractApi.contextType = ExplorerContext;
 
 const TITLE = "ICX Contract Explorer";
 const SUB_TITLE = "dedicated for ICON contract developers";
-const COPYRIGHT = "© 2020 duyyudus • ICONVIET";
+const COPYRIGHT = "© 2020";
 
 const TESTNET_ENDPOINT = "https://bicon.net.solidwallet.io/api/v3";
 const MAINNET_ENDPOINT = "https://ctz.solidwallet.io/api/v3";
@@ -38,8 +40,20 @@ function Header(props) {
               <span id="IcxExplorer-subtitle">{SUB_TITLE}</span>
             </div>
           </div>
-          <span id="IcxExplorer-copyright">{COPYRIGHT}</span>
+
+          <span id="IcxExplorer-copyright">
+            <a href="https://yudus.dev">
+              <img
+                src={LOGO}
+                id="IcxExplorer-copyright-logo"
+                alt="Yudus Valley"
+              />
+            </a>
+            {COPYRIGHT}
+          </span>
         </div>
+
+        {/* Endpoint */}
         <div className="col" id="IcxExplorer-endpoint">
           <div className="row">
             <div className="col">
@@ -53,6 +67,7 @@ function Header(props) {
                 }
               />
             </div>
+
             <div className="col-auto">
               <div className="dropdown">
                 <button
@@ -150,7 +165,12 @@ class IcxExplorer extends React.Component {
               </div>
             </div>
             <br />
-            <ContractApi title="Contract APIs" />
+
+            <div className="row">
+              <div className="col">
+                <ContractApi title="Contract APIs" />
+              </div>
+            </div>
             <br />
           </div>
         </ExplorerContext.Provider>

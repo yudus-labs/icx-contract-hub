@@ -71,7 +71,7 @@ function Output(props) {
               <div className="col-auto">
                 <div
                   type="button"
-                  className="btn btn-secondary checktx-button"
+                  className="btn btn-secondary btn-sm checktx-button"
                   onClick={props.checkTx}
                 >
                   Check Tx
@@ -431,7 +431,7 @@ export class ContractApi extends React.Component {
     return (
       <div className="container-fluid ContractApi">
         <h4 id="ContractApi-title">{this.state.title}</h4>
-        <div className="container-fluid">
+        <div className="container-fluid px-1">
           <div className="row my-4">
             <div className="col-auto">
               {!this.state.noContract ? (
@@ -480,7 +480,7 @@ export class ContractApi extends React.Component {
             <div className="col-auto">
               <div
                 type="button"
-                className="btn btn-secondary btn-sm"
+                className="btn btn-primary btn-sm"
                 onClick={async () => this.fetchMethods()}
               >
                 Refresh

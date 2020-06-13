@@ -1,38 +1,52 @@
 @import "common.css";
 
 .dropdown-menu {
-  background-color: var(--background);
+  background-color: var(--primary-bg-light);
+  color: var(--primary-bg-text);
+}
+
+.IcxExplorer {
+  padding-right: 0;
+  padding-left: 0;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 #IcxExplorer-header {
-  background-color: var(--main-color-dark-4);
-  padding-top: 20px;
-  padding-bottom: 20px;
+  background-color: var(--primary-bg-light);
+  color: var(--primary-bg-text);
+  padding: 20px 30px 20px 30px;
 }
 
 #IcxExplorer-title {
+  font-family: "Comfortaa";
   font-size: xx-large;
-  color: white;
+  color: var(--secondary-cool-3);
 }
 
 #IcxExplorer-subtitle {
-  font-size: large;
-  color: var(--background-dark-1);
-  font-family: "Courier New", Courier, monospace;
+  font-size: larger;
+  color: var(--primary-main-3);
+  font-family: "PT Mono", "Courier New", Courier, monospace;
 }
 
 #IcxExplorer-copyright {
-  font-size: smaller;
-  color: var(--background-dark-1);
+  font-size: small;
+  color: var(--primary-main-3);
+}
+
+#IcxExplorer-copyright-logo {
+  height: 30px;
+  margin-right: 10px;
 }
 
 #IcxExplorer-endpoint {
   font-size: large;
-  color: white;
+  color: var(--primary-bg-light);
 }
 
 #IcxExplorer-body {
-  background-color: var(--background);
+  /* background-color: var(--background); */
 }
 
 #endpoint-input {
