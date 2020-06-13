@@ -27,3 +27,11 @@
   --secondary-hot-3: #e65939;
   --secondary-hot-text: #f2e8e6;
 }
+
+.custom-link {
+  color: var(--primary-main-3);
+}
+
+.custom-link:hover {
+  color: var(--secondary-cool-3) !important;
+}

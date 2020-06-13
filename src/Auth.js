@@ -82,9 +82,18 @@ export class Auth extends React.Component {
         <div className="container">
           <div className="row my-1">
             <div className="col-auto">
-              <div className="alert alert-warning" role="alert">
+              <div className="alert alert-info" role="alert">
                 You need contract owner access to make <b>writable</b> contract
                 calls, use at your own risk
+                <br />
+                If you prefer to use offline, just get the source here{" "}
+                <a
+                  href="https://github.com/duyyudus/icx-contract-explorer"
+                  alt="ICX Contract Explorer"
+                  className="custom-link"
+                >
+                  https://github.com/duyyudus/icx-contract-explorer
+                </a>
               </div>
             </div>
           </div>

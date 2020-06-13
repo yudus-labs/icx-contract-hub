@@ -14,7 +14,7 @@
   padding-left: 20px;
 }
 
-.alert-warning {
+.alert-info {
   background-color: var(--secondary-cool-1);
   color: var(--secondary-cool-dark-text);
   border-style: none;
