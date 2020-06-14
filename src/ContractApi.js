@@ -305,7 +305,8 @@ export class ApiItem extends React.Component {
                   <div className="col">
                     <div className="row">
                       <div className="col-auto">
-                        <var className="param-name">{param.name}</var> : <code>{param.type}</code>
+                        <var className="param-name">{param.name}</var> :{" "}
+                        <code>{param.type}</code>
                       </div>
                       <div className="col">
                         <input
@@ -495,16 +496,25 @@ export class ContractApi extends React.Component {
           </div>
 
           <div className="row">
-            <div className="col mx-1">
-              <h5 id="ApiList-title">Readonly methods</h5>
+            <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
               <div className="container">
-                <ApiList methods={this.state.readonlyMethods} readonly={true} />
+                <h5 id="ApiList-title">Readonly methods</h5>
+                <div className="container">
+                  <ApiList
+                    methods={this.state.readonlyMethods}
+                    readonly={true}
+                  />
+                </div>
+                {this.state.readonlyMethods.length > 0 ? "" : "...empty..."}
               </div>
             </div>
-            <div className="col mx-1">
-              <h5 id="ApiList-title">Writable methods</h5>
+            <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
               <div className="container">
-                <ApiList methods={this.state.methods} readonly={false} />
+                <h5 id="ApiList-title">Writable methods</h5>
+                <div className="container">
+                  <ApiList methods={this.state.methods} readonly={false} />
+                </div>
+                {this.state.methods.length > 0 ? "" : "...empty..."}
               </div>
             </div>
           </div>

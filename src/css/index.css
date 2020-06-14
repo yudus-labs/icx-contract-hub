@@ -22,3 +22,15 @@ code {
   box-shadow: 0 0 2px var(--primary-main-3) inset;
   outline: 0 none;
 }
+
+.btn-primary {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.btn-secondary {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}

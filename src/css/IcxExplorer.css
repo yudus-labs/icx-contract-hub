@@ -33,6 +33,8 @@
 #IcxExplorer-copyright {
   font-size: small;
   color: var(--primary-main-3);
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 #IcxExplorer-copyright-logo {

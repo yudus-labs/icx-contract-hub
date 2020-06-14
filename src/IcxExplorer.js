@@ -30,33 +30,39 @@ function Header(props) {
   return (
     <div className="container-fluid" id="IcxExplorer-header">
       <div className="row">
-        <div className="col">
+        {/* Title */}
+        <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12">
           <div className="row">
-            <div className="col-auto">
+            <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12">
               <header id="IcxExplorer-title">{TITLE}</header>
             </div>
-            <div className="col">
+            <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12">
               <br />
               <span id="IcxExplorer-subtitle">{SUB_TITLE}</span>
             </div>
           </div>
 
-          <span id="IcxExplorer-copyright">
-            <a href="https://yudus.dev">
-              <img
-                src={LOGO}
-                id="IcxExplorer-copyright-logo"
-                alt="Yudus Valley"
-              />
-            </a>
-            {COPYRIGHT}
-          </span>
+          <div className="row" id="IcxExplorer-copyright">
+            <div className="col">
+              <a href="https://yudus.dev">
+                <img
+                  src={LOGO}
+                  id="IcxExplorer-copyright-logo"
+                  alt="Yudus Valley"
+                />
+              </a>
+              {COPYRIGHT}
+            </div>
+          </div>
         </div>
 
         {/* Endpoint */}
-        <div className="col" id="IcxExplorer-endpoint">
+        <div
+          className="col-lg-6 col-md-12 col-sm-12 col-xs-12"
+          id="IcxExplorer-endpoint"
+        >
           <div className="row">
-            <div className="col">
+            <div className="col-lg-9 col-md-9 col-sm-8 col-xs-12">
               <input
                 type="text"
                 className="form-control"
@@ -68,7 +74,7 @@ function Header(props) {
               />
             </div>
 
-            <div className="col-auto">
+            <div className="col-lg-3 col-md-3 col-sm-4 col-xs-12 text-right">
               <div className="dropdown">
                 <button
                   className="btn btn-primary btn-sm dropdown-toggle"
@@ -157,10 +163,11 @@ class IcxExplorer extends React.Component {
           <div className="container-fluid" id="IcxExplorer-body">
             <br />
             <div className="row">
-              <div className="col">
+              <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <Auth title="Authentication" />
+                <br />
               </div>
-              <div className="col">
+              <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <Utility title="Utilities" />
               </div>
             </div>
