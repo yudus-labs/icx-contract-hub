@@ -166,9 +166,11 @@ export class ApiItem extends React.Component {
   };
 
   updateParamValue = (param, value) => {
-    const paramValues = {};
-    paramValues[param] = value;
-    this.setState({ paramValues: paramValues });
+    this.setState((state) => {
+      const paramValues = state.paramValues;
+      paramValues[param] = value;
+      return { paramValues: paramValues };
+    });
   };
 
   async call(method, params) {
