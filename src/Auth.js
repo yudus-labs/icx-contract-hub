@@ -88,11 +88,11 @@ export class Auth extends React.Component {
                 <br />
                 If you prefer to use offline, just get the source here{" "}
                 <a
-                  href="https://github.com/duyyudus/icx-contract-explorer"
+                  href="https://github.com/yudus-lab/icx-contract-explorer"
                   alt="ICX Contract Explorer"
                   className="custom-link"
                 >
-                  https://github.com/duyyudus/icx-contract-explorer
+                  https://github.com/yudus-lab/icx-contract-explorer
                 </a>
               </div>
             </div>
