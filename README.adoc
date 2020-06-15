@@ -2,8 +2,10 @@
 
 A developer-oriented explorer dedicated for smart contract development on ICON blockchain network
 
-Work with any endpoint, from tbears, testnet, to mainnet...
+### Features
 
-Built-in contract call quick result checker
+- Work with any endpoint, from tbears, testnet, mainnet, to custom `loopchain` networks
+
+- Built-in contract call and transaction result display
 
 image::docs/icx-ce.png[]
