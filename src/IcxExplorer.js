@@ -1,4 +1,5 @@
 import React from "react";
+import ReactGA from "react-ga";
 // import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import { Auth } from "./Auth.js";
@@ -25,6 +26,9 @@ const TESTNET_NID = "3";
 const MAINNET_NID = "1";
 // const DEFAULT_CONTRACT = "cxa6ba8f0730ad952b5898ac3e5e90a17e20574eff";
 const DEFAULT_CONTRACT = "";
+
+ReactGA.initialize("UA-169204893-3");
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 function Header(props) {
   return (
