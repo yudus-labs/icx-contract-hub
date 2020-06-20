@@ -21,12 +21,14 @@ const SUB_TITLE = "dedicated for ICON contract developers";
 const COPYRIGHT = "v0.2.0 - © 2020";
 
 const CUSTOM_ENDPOINT = "http://please_enter_your_custom_network";
+const LOCAL_ENDPOINT = "http://localhost:9000/api/v3";
 const TESTNET_ENDPOINT = "https://bicon.net.solidwallet.io/api/v3";
 const MAINNET_ENDPOINT = "https://ctz.solidwallet.io/api/v3";
 const CUSTOM_NID = "0";
+const LOCAL_NID = "0";
 const TESTNET_NID = "3";
 const MAINNET_NID = "1";
-const DEFAULT_CONTRACT = "cx69bcdf1753472c1444188ec3f5188657e30c8322";  // broof
+const DEFAULT_CONTRACT = "cx69bcdf1753472c1444188ec3f5188657e30c8322"; // broof
 
 ReactGA.initialize("UA-169204893-3");
 ReactGA.pageview(window.location.pathname + window.location.search);
@@ -113,6 +115,16 @@ function Header(props) {
                     }
                   >
                     Testnet
+                  </button>
+
+                  <button
+                    className="dropdown-item"
+                    type="button"
+                    onClick={() =>
+                      props.handleEndpointChange(LOCAL_ENDPOINT, LOCAL_NID)
+                    }
+                  >
+                    Local
                   </button>
 
                   <button
