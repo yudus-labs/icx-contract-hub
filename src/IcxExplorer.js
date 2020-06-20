@@ -20,8 +20,10 @@ const TITLE = "ICX Contract Explorer";
 const SUB_TITLE = "dedicated for ICON contract developers";
 const COPYRIGHT = "© 2020";
 
+const CUSTOM_ENDPOINT = "http://please_enter_your_custom_network";
 const TESTNET_ENDPOINT = "https://bicon.net.solidwallet.io/api/v3";
 const MAINNET_ENDPOINT = "https://ctz.solidwallet.io/api/v3";
+const CUSTOM_NID = "0";
 const TESTNET_NID = "3";
 const MAINNET_NID = "1";
 // const DEFAULT_CONTRACT = "cxa6ba8f0730ad952b5898ac3e5e90a17e20574eff";
@@ -98,19 +100,30 @@ function Header(props) {
                     className="dropdown-item"
                     type="button"
                     onClick={() =>
+                      props.handleEndpointChange(MAINNET_ENDPOINT, MAINNET_NID)
+                    }
+                  >
+                    Mainnet
+                  </button>
+
+                  <button
+                    className="dropdown-item"
+                    type="button"
+                    onClick={() =>
                       props.handleEndpointChange(TESTNET_ENDPOINT, TESTNET_NID)
                     }
                   >
                     Testnet
                   </button>
+
                   <button
                     className="dropdown-item"
                     type="button"
                     onClick={() =>
-                      props.handleEndpointChange(MAINNET_ENDPOINT, MAINNET_NID)
+                      props.handleEndpointChange(CUSTOM_ENDPOINT, CUSTOM_NID)
                     }
                   >
-                    Mainnet
+                    Custom
                   </button>
                 </div>
               </div>
@@ -126,8 +139,8 @@ class IcxExplorer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      endpoint: TESTNET_ENDPOINT,
-      nid: TESTNET_NID,
+      endpoint: MAINNET_ENDPOINT,
+      nid: MAINNET_NID,
       pkey: "",
       keystore: "",
       keystorePass: "",
