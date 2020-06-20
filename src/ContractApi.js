@@ -1,12 +1,6 @@
 import React from "react";
+import { IconApi } from "./IconApi.js";
 import "./css/ContractApi.css";
-import IconService, {
-  HttpProvider,
-  IconBuilder,
-  IconConverter,
-  IconWallet,
-  SignedTransaction,
-} from "icon-sdk-js";
 
 function TxResultTitle(props) {
   if (props.checkFailed) {
@@ -181,14 +175,12 @@ export class ApiItem extends React.Component {
     let failed;
 
     try {
-      const provider = new HttpProvider(this.context.explorerState.endpoint);
-      const iconService = new IconService(provider);
-      const call = new IconBuilder.CallBuilder()
-        .to(this.context.explorerState.contract)
-        .method(method)
-        .params(params)
-        .build();
-      result = await iconService.call(call).execute();
+      const api = new IconApi({
+        endpoint: this.context.explorerState.endpoint,
+        nid: this.context.explorerState.nid,
+        contract: this.context.explorerState.contract,
+      });
+      result = await api.call(method, params);
       failed = false;
     } catch (err) {
       result = err;
@@ -213,38 +205,20 @@ export class ApiItem extends React.Component {
     let failed;
 
     try {
-      const provider = new HttpProvider(this.context.explorerState.endpoint);
-      const iconService = new IconService(provider);
+      const api = IconApi(
+        {
+          endpoint: this.context.explorerState.endpoint,
+          nid: this.context.explorerState.nid,
+          contract: this.context.explorerState.contract,
+        },
+        {
+          pkey: this.context.explorerState,
+          keystore: this.context.explorerState,
+          keystorePass: this.context.explorerState,
+        }
+      );
 
-      let wallet = null;
-      if (this.context.explorerState.pkey) {
-        wallet = IconWallet.loadPrivateKey(this.context.explorerState.pkey);
-      } else if (this.context.explorerState.keystore) {
-        wallet = IconWallet.loadKeystore(
-          JSON.parse(this.context.explorerState.keystore),
-          this.context.explorerState.keystorePass
-        );
-      }
-
-      if (!wallet) {
-        throw new Error("Please provide contract owner authentication info");
-      }
-
-      const transaction = new IconBuilder.CallTransactionBuilder()
-        .from(wallet.getAddress())
-        .to(this.context.explorerState.contract)
-        .stepLimit(IconConverter.toBigNumber("5000000000"))
-        .nid(IconConverter.toBigNumber(this.context.explorerState.nid))
-        .nonce(IconConverter.toBigNumber("1"))
-        .version(IconConverter.toBigNumber("3"))
-        .timestamp(new Date().getTime() * 1000)
-        .method(method)
-        .params(params)
-        .build();
-
-      const signedTx = new SignedTransaction(transaction, wallet);
-
-      txHash = await iconService.sendTransaction(signedTx).execute();
+      txHash = await api.sendCallTx(method, params);
       failed = false;
     } catch (err) {
       txHash = err;
@@ -266,9 +240,12 @@ export class ApiItem extends React.Component {
     let failed = false;
 
     try {
-      const provider = new HttpProvider(this.context.explorerState.endpoint);
-      const iconService = new IconService(provider);
-      txResult = await iconService.getTransactionResult(txHash).execute();
+      const api = new IconApi({
+        endpoint: this.context.explorerState.endpoint,
+        nid: this.context.explorerState.nid,
+        contract: this.context.explorerState.contract,
+      });
+      txResult = await api.checkTx(txHash);
       failed = false;
     } catch (err) {
       txResult = err;
@@ -380,11 +357,12 @@ export class ContractApi extends React.Component {
     this.setState({ fetching: true });
 
     try {
-      const provider = new HttpProvider(this.context.explorerState.endpoint);
-      const iconService = new IconService(provider);
-      const apiList = await iconService
-        .getScoreApi(this.context.explorerState.contract)
-        .execute();
+      const api = new IconApi({
+        endpoint: this.context.explorerState.endpoint,
+        nid: this.context.explorerState.nid,
+        contract: this.context.explorerState.contract,
+      });
+      const apiList = await api.getScoreApi();
 
       const methods = apiList
         .getList()
@@ -405,12 +383,12 @@ export class ContractApi extends React.Component {
 
       // Get contract name, if any
       try {
-        const call = new IconBuilder.CallBuilder()
-          .to(this.context.explorerState.contract)
-          .method("name")
-          .params({})
-          .build();
-        const cxName = await iconService.call(call).execute();
+        const api = new IconApi({
+          endpoint: this.context.explorerState.endpoint,
+          nid: this.context.explorerState.nid,
+          contract: this.context.explorerState.contract,
+        });
+        const cxName = await api.call("name", {});
         this.setState({ contractName: cxName });
       } catch (err) {
         console.log("Failed to get contract name: " + err);
