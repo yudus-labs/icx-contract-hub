@@ -114,7 +114,10 @@ class UnitConverter extends React.Component {
               type="number"
               className="form-control"
               value={this.state.icx}
-              onChange={(e) => this.setState({ icx: e.target.value })}
+              onChange={(e) => {
+                this.setState({ icx: e.target.value });
+                this.icxToLoop(e.target.value);
+              }}
               onKeyPress={(e) => {
                 if (e.key === "Enter") {
                   this.icxToLoop(e.target.value);
@@ -132,7 +135,10 @@ class UnitConverter extends React.Component {
               type="number"
               className="form-control"
               value={this.state.loops}
-              onChange={(e) => this.setState({ loops: e.target.value })}
+              onChange={(e) => {
+                this.setState({ loops: e.target.value });
+                this.loopToIcx(e.target.value);
+              }}
               onKeyPress={(e) => {
                 if (e.key === "Enter") {
                   this.loopToIcx(e.target.value);
@@ -149,7 +155,10 @@ class UnitConverter extends React.Component {
               type="number"
               className="form-control"
               value={this.state.dec}
-              onChange={(e) => this.setState({ dec: e.target.value })}
+              onChange={(e) => {
+                this.setState({ dec: e.target.value });
+                this.decToHex(e.target.value);
+              }}
               onKeyPress={(e) => {
                 if (e.key === "Enter") {
                   this.decToHex(e.target.value);
@@ -167,7 +176,10 @@ class UnitConverter extends React.Component {
               type="text"
               className="form-control"
               value={this.state.hex}
-              onChange={(e) => this.setState({ hex: e.target.value })}
+              onChange={(e) => {
+                this.setState({ hex: e.target.value });
+                this.hexToDec(e.target.value);
+              }}
               onKeyPress={(e) => {
                 if (e.key === "Enter") {
                   this.hexToDec(e.target.value);
