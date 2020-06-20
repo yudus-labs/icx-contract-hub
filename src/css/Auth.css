@@ -19,3 +19,10 @@
   color: var(--secondary-cool-dark-text);
   border-style: none;
 }
+
+.iconex-wallet {
+  background-color: var(--secondary-cool-2);
+  color: var(--secondary-cool-text);
+  padding: 3px 10px 3px 10px;
+  border-radius: 5px;
+}

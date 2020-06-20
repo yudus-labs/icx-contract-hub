@@ -18,7 +18,7 @@ ContractApi.contextType = ExplorerContext;
 
 const TITLE = "ICX Contract Explorer";
 const SUB_TITLE = "dedicated for ICON contract developers";
-const COPYRIGHT = "© 2020";
+const COPYRIGHT = "v0.2.0 - © 2020";
 
 const CUSTOM_ENDPOINT = "http://please_enter_your_custom_network";
 const TESTNET_ENDPOINT = "https://bicon.net.solidwallet.io/api/v3";
@@ -26,8 +26,7 @@ const MAINNET_ENDPOINT = "https://ctz.solidwallet.io/api/v3";
 const CUSTOM_NID = "0";
 const TESTNET_NID = "3";
 const MAINNET_NID = "1";
-// const DEFAULT_CONTRACT = "cxa6ba8f0730ad952b5898ac3e5e90a17e20574eff";
-const DEFAULT_CONTRACT = "";
+const DEFAULT_CONTRACT = "cx69bcdf1753472c1444188ec3f5188657e30c8322";  // broof
 
 ReactGA.initialize("UA-169204893-3");
 ReactGA.pageview(window.location.pathname + window.location.search);
@@ -144,6 +143,7 @@ class IcxExplorer extends React.Component {
       pkey: "",
       keystore: "",
       keystorePass: "",
+      iconexWallet: "",
       contract: DEFAULT_CONTRACT,
     };
   }
@@ -172,6 +172,7 @@ class IcxExplorer extends React.Component {
               pkey: this.state.pkey,
               keystore: this.state.keystore,
               keystorePass: this.state.keystorePass,
+              iconexWallet: this.state.iconexWallet,
               contract: this.state.contract,
             },
             updateExplorerState: this.updateExplorerState,

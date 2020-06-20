@@ -50,7 +50,12 @@
   color: var(--primary-dark);
 }
 
-
+.icx-amount-input {
+  margin-top: 5px;
+  margin-left: 5px;
+  height: 25px;
+  font-size: 14px;
+}
 
 #contract-address-input {
   height: 30px;

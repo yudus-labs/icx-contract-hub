@@ -132,6 +132,8 @@ export class ApiItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      icxValue: "",
+
       methodName: props.methodName,
       methodParams: props.methodParams,
       readonly: props.readonly,
@@ -155,7 +157,11 @@ export class ApiItem extends React.Component {
     if (this.state.readonly) {
       this.call(this.state.methodName, this.state.paramValues);
     } else {
-      this.sendCallTx(this.state.methodName, this.state.paramValues);
+      this.sendCallTx(
+        this.state.methodName,
+        this.state.paramValues,
+        parseFloat(this.state.icxValue) * 10 ** 18
+      );
     }
   };
 
@@ -197,28 +203,30 @@ export class ApiItem extends React.Component {
     console.log("Call result: " + result);
   }
 
-  async sendCallTx(method, params) {
+  async sendCallTx(method, params, value) {
     console.log(`Calling method: ${method}`);
     console.log(`..with params: ${JSON.stringify(params)}`);
+    console.log(`..and ICX value: ${value}`);
 
     let txHash = "";
     let failed;
 
     try {
-      const api = IconApi(
+      const api = new IconApi(
         {
           endpoint: this.context.explorerState.endpoint,
           nid: this.context.explorerState.nid,
           contract: this.context.explorerState.contract,
         },
         {
-          pkey: this.context.explorerState,
-          keystore: this.context.explorerState,
-          keystorePass: this.context.explorerState,
+          pkey: this.context.explorerState.pkey,
+          keystore: this.context.explorerState.keystore,
+          keystorePass: this.context.explorerState.keystorePass,
+          iconexWallet: this.context.explorerState.iconexWallet,
         }
       );
 
-      txHash = await api.sendCallTx(method, params);
+      txHash = await api.sendCallTx(method, params, value);
       failed = false;
     } catch (err) {
       txHash = err;
@@ -270,6 +278,21 @@ export class ApiItem extends React.Component {
             >
               {this.state.methodName}
             </div>
+
+            {!this.state.readonly ? (
+              <div>
+                <input
+                  type="number"
+                  className="form-control icx-amount-input"
+                  value={this.state.icxValue || ""}
+                  onChange={(e) => this.setState({ icxValue: e.target.value })}
+                  placeholder="ICX amount here"
+                  title="ICX value to be sent with contract call transaction, in ICX unit"
+                />
+              </div>
+            ) : (
+              ""
+            )}
 
             {this.state.fetching ? (
               <div className="fetching">Calling...</div>
