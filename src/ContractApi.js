@@ -136,6 +136,7 @@ export class ApiItem extends React.Component {
 
       methodName: props.methodName,
       methodParams: props.methodParams,
+      payable: props.payable,
       readonly: props.readonly,
       paramValues: {},
 
@@ -279,15 +280,15 @@ export class ApiItem extends React.Component {
               {this.state.methodName}
             </div>
 
-            {!this.state.readonly ? (
+            {!this.state.readonly && this.state.payable ? (
               <div>
                 <input
                   type="number"
                   className="form-control icx-amount-input"
                   value={this.state.icxValue || ""}
                   onChange={(e) => this.setState({ icxValue: e.target.value })}
-                  placeholder="ICX amount here"
-                  title="ICX value to be sent with contract call transaction, in ICX unit"
+                  placeholder="Payable value in ICX"
+                  title="ICX value to be sent with payable contract call, in ICX unit"
                 />
               </div>
             ) : (
@@ -301,9 +302,10 @@ export class ApiItem extends React.Component {
             )}
           </div>
 
+          {/* Params list */}
           {this.state.methodParams.length > 0
             ? this.state.methodParams.map((param, index) => (
-                <div className="row my-1" key={index}>
+                <div className="row my-2" key={index}>
                   <div className="col">
                     <div className="row">
                       <div className="col-auto">
@@ -347,6 +349,7 @@ function ApiList(props) {
     <ApiItem
       methodName={item.methodName}
       methodParams={item.methodParams}
+      payable={item.payable}
       readonly={props.readonly}
       key={index + item.methodName}
     />
@@ -391,16 +394,28 @@ export class ContractApi extends React.Component {
         .getList()
         .filter((item) => item.type === "function")
         .filter((item) => !item.hasOwnProperty("readonly"))
-        .map((item) => ({ methodName: item.name, methodParams: item.inputs }));
+        .map((item) => ({
+          methodName: item.name,
+          methodParams: item.inputs,
+          payable: item.hasOwnProperty("payable"),
+        }));
       this.setState({ methods: methods });
 
       const readonlyMethods = apiList
         .getList()
         .filter((item) => item.type === "function")
         .filter((item) => item.hasOwnProperty("readonly"))
-        .map((item) => ({ methodName: item.name, methodParams: item.inputs }));
+        .map((item) => ({
+          methodName: item.name,
+          methodParams: item.inputs,
+          payable: false,
+        }));
       this.setState({
         readonlyMethods: readonlyMethods,
+      });
+
+      // Reset error message if any
+      this.setState({
         invalidContractError: "",
       });
 
@@ -421,14 +436,14 @@ export class ContractApi extends React.Component {
       // Loaded contract
       this.setState({ noContract: false });
       // Finished
+
+      // console.log("API list: " + JSON.stringify(apiList.getList(), null, 2));
+      // console.log("API list: " + JSON.stringify(methods, null, 2));
     } catch (err) {
       this.setState({ invalidContractError: err });
     }
 
     this.setState({ fetching: false });
-
-    // console.log("API list: " + JSON.stringify(apiList.getList(), null, 2));
-    // console.log("API list: " + JSON.stringify(methods, null, 2));
   }
 
   render() {

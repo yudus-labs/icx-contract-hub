@@ -18,7 +18,7 @@ ContractApi.contextType = ExplorerContext;
 
 const TITLE = "ICX Contract Explorer";
 const SUB_TITLE = "dedicated for ICON contract developers";
-const COPYRIGHT = "v0.2.0 - © 2020";
+const COPYRIGHT = "v0.2.1 - © 2020";
 
 const CUSTOM_ENDPOINT = "http://please_enter_your_custom_network";
 const LOCAL_ENDPOINT = "http://localhost:9000/api/v3";
