@@ -2,9 +2,13 @@
 
 A developer-oriented explorer dedicated for smart contract development on ICON blockchain network.
 
-_Version 0.2.0_
+### Changes log
 
-### Features
+#### _v0.2.1_
+
+- Show ICX value transfer input for payable calls only
+
+#### _v0.2.0_
 
 - Work with any endpoint, from tbears, testnet, mainnet, to custom `loopchain` networks
 
@@ -19,6 +23,8 @@ _Version 0.2.0_
 - Each SCORE call item has each own setting and params, handy for testing contracts
 
 - Auto unit convert utility
+
+### GUI preview
 
 *Desktop full layout*
 
