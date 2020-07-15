@@ -3,12 +3,12 @@ import ReactDOM from "react-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/js/dist/dropdown";
 import "./css/index.css";
-import ContractHub from "./ContractHub";
+import IcxExplorer from "./IcxExplorer";
 import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
   <React.StrictMode>
-    <ContractHub />
+    <IcxExplorer />
   </React.StrictMode>,
   document.getElementById("root")
 );
