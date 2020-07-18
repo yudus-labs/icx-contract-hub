@@ -33,7 +33,7 @@ class ContractHub extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid ContractHub">
+      <div className="container-fluid contract-hub">
         <ContractHubContext.Provider
           value={{
             hubState: this.state,

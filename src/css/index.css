@@ -1,0 +1,36 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat");
+@import url("https://fonts.googleapis.com/css?family=Comfortaa");
+@import url("https://fonts.googleapis.com/css?family=PT Mono");
+@import "common.css";
+
+body {
+  margin: 0;
+  font-family: "Montserrat";
+  font-size: 15px;
+  background-color: var(--primary-bg-white) !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: "PT Mono", source-code-pro, Menlo, Monaco, Consolas,
+    "Courier New", monospace;
+}
+
+.form-control:focus {
+  border-color: var(--primary-main-2);
+  box-shadow: 0 0 2px var(--primary-main-3) inset;
+  outline: 0 none;
+}
+
+.btn-primary {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.btn-secondary {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}

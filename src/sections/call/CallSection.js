@@ -1,9 +1,9 @@
 import React from "react";
 import { TabView } from "../../common/TabView";
 
-import "../css/CallSection.css";
+import "../../css/CallSection.css";
 
-class CallSection extends React.Component {
+class ContractCallPanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -11,11 +11,29 @@ class CallSection extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid CallSection">
-        <TabView />
+      <div className="container-fluid contract-call-panel">
+        Contract Calls Panel content
       </div>
     );
   }
 }
 
-export default CallSection;
+export class CallSection extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    return (
+      <div className="container-fluid call-section">
+        <TabView
+          tabModules={{
+            titles: ["Contract Calls"],
+            panels: [<ContractCallPanel />],
+          }}
+        />
+      </div>
+    );
+  }
+}

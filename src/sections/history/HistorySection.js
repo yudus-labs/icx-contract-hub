@@ -1,9 +1,9 @@
 import React from "react";
 import { TabView } from "../../common/TabView";
 
-import "../css/HistorySection.css";
+import "../../css/HistorySection.css";
 
-class HistorySection extends React.Component {
+class TransactionPanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -11,11 +11,44 @@ class HistorySection extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid HistorySection">
-        <TabView />
+      <div className="container-fluid transaction-panel">
+        Transaction Panel content
       </div>
     );
   }
 }
 
-export default HistorySection;
+class InternalTransactionPanel extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    return (
+      <div className="container-fluid internal-transaction-panel">
+        Internal Transaction Panel content
+      </div>
+    );
+  }
+}
+
+export class HistorySection extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    return (
+      <div className="container-fluid history-section">
+        <TabView
+          tabModules={{
+            titles: ["Transactions", "Internal Transactions"],
+            panels: [<TransactionPanel />, <InternalTransactionPanel />],
+          }}
+        />
+      </div>
+    );
+  }
+}
