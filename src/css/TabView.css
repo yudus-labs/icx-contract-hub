@@ -1,1 +1,43 @@
 @import "common.css";
+
+.tab-view-header-title-active {
+  height: 40px;
+  font-size: 30px;
+  font-weight: bold;
+  color: var(--primary-bg-text);
+  background: none;
+  border: none;
+  padding: 5px;
+  text-align: center;
+}
+
+.tab-view-header-title-inactive {
+  height: 40px;
+  font-size: 30px;
+  font-weight: normal;
+  color: var(--primary-bg-dark);
+  background: none;
+  border: none;
+  padding: 5px;
+  text-align: center;
+}
+
+.tab-view-header-title-active:active,
+.tab-view-header-title-active:hover,
+.tab-view-header-title-active:focus {
+  color: var(--primary-bg-text) !important;
+  background: none !important;
+  border: none !important;
+  border-style: none !important;
+  box-shadow: none !important;
+}
+
+.tab-view-header-title-inactive:active,
+.tab-view-header-title-inactive:hover,
+.tab-view-header-title-inactive:focus {
+  color: var(--primary-bg-text) !important;
+  background: none !important;
+  border: none !important;
+  border-style: none !important;
+  box-shadow: none !important;
+}

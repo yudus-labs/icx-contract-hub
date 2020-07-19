@@ -1,12 +1,7 @@
 :root {
-  --primary-bg-white: #fafafa;
-  --primary-bg-light: #edf1f2;
-  --primary-bg-1: #e1e5e6;
-  --primary-bg-2: #c8cbcc;
-  --primary-bg-text: #4b4c4d;
-
-  --primary-bg-dark: #919899;
-  --primary-bg-dark-text: #ffffff;
+  /* Primary */
+  --primary-light: #61daf2;
+  --primary-light-text: #1f454d;
 
   --primary-main-1: #57c3d9;
   --primary-main-2: #47a1b3;
@@ -16,16 +11,35 @@
   --primary-dark: #1f454d;
   --primary-dark-text: #e6f0f2;
 
-  --secondary-cool-1: #b8e6d2;
-  --secondary-cool-dark-text: #494d4b;
+  /* Primary background */
+  --primary-bg-white: #fafafa;
+  --primary-bg-light: #edf1f2;
+  --primary-bg-1: #e1e5e6;
+  --primary-bg-2: #c8cbcc;
+  --primary-bg-text: #4b4c4d;
 
-  --secondary-cool-2: #66cca1;
-  --secondary-cool-3: #36b37e;
-  --secondary-cool-text: #f2fffa;
+  --primary-bg-dark: #919899;
+  --primary-bg-dark-text: #ffffff;
 
+  /* Secondary hot */
+  --secondary-hot-1: #e5c0b8;
+  --secondary-hot-dark-text: #4d4949;
   --secondary-hot-2: #e68873;
   --secondary-hot-3: #e65939;
   --secondary-hot-text: #f2e8e6;
+
+  /* Secondary warm */
+  --secondary-warm-1: #f2e2c2;
+  --secondary-warm-2: #f2ca79;
+  --secondary-warm-3: #f2b230;
+  --secondary-warm-text: #4d4b49;
+
+  /* Secondary cool */
+  --secondary-cool-1: #b8e6d2;
+  --secondary-cool-dark-text: #494d4b;
+  --secondary-cool-2: #66cca1;
+  --secondary-cool-3: #36b37e;
+  --secondary-cool-text: #f2fffa;
 }
 
 .custom-link {

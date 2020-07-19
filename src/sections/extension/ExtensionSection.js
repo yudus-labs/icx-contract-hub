@@ -1,7 +1,7 @@
 import React from "react";
 import { TabView } from "../../common/TabView";
 
-import "../../css/ExtensionSection.css";
+import "../../css/sections/ExtensionSection.css";
 
 class AuthenticationPanel extends React.Component {
   constructor(props) {

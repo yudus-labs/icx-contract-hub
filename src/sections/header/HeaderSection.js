@@ -1,6 +1,6 @@
 import React from "react";
 
-import "../../css/HeaderSection.css";
+import "../../css/sections/HeaderSection.css";
 
 export class HeaderSection extends React.Component {
   constructor(props) {

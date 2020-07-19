@@ -2,36 +2,46 @@ import React from "react";
 
 import "../css/TabView.css";
 
-class TabViewHeader extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      tabButtons: props.tabButtons,
-    };
-  }
-
-  render() {
-    return (
-      <div className="container-fluid tab-view-header">
-        <div className="row">{this.state.tabButtons}</div>
-      </div>
-    );
-  }
+function TabViewHeaderTitle(props) {
+  return (
+    <button
+      type="button"
+      className={
+        props.active
+          ? "btn btn-primary tab-view-header-title-active"
+          : "btn btn-primary tab-view-header-title-inactive"
+      }
+      onClick={(e) => {
+        props.handleTitleClick(props.index);
+      }}
+    >
+      {props.title}
+    </button>
+  );
 }
 
-class TabViewBody extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    return (
-      <div className="container-fluid tab-view-body">
-        {this.props.currentTab}
+function TabViewHeader(props) {
+  return (
+    <div className="container-fluid tab-view-header">
+      <div className="row">
+        {props.tabTitles.map((title, index) => (
+          <TabViewHeaderTitle
+            title={title}
+            index={index}
+            active={index === props.currentTabId}
+            handleTitleClick={props.handleTitleClick}
+            key={index}
+          />
+        ))}
       </div>
-    );
-  }
+    </div>
+  );
+}
+
+function TabViewBody(props) {
+  return (
+    <div className="container-fluid tab-view-body">{props.currentTab}</div>
+  );
 }
 
 export class TabView extends React.Component {
@@ -54,18 +64,9 @@ export class TabView extends React.Component {
     return (
       <div className="container-fluid tab-view">
         <TabViewHeader
-          tabButtons={this.state.tabModules.titles.map((title, index) => (
-            <div
-              type="button"
-              className="btn btn-primary tab-view-header-title"
-              onClick={(e) => {
-                this.handleTitleClick(index);
-              }}
-              key={index}
-            >
-              {title}
-            </div>
-          ))}
+          tabTitles={this.state.tabModules.titles}
+          currentTabId={this.state.currentTabId}
+          handleTitleClick={this.handleTitleClick}
         />
         <TabViewBody
           currentTab={

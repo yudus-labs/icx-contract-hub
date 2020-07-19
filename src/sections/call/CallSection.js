@@ -1,7 +1,7 @@
 import React from "react";
 import { TabView } from "../../common/TabView";
 
-import "../../css/CallSection.css";
+import "../../css/sections/CallSection.css";
 
 class ContractCallPanel extends React.Component {
   constructor(props) {

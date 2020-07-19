@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat");
 @import url("https://fonts.googleapis.com/css?family=Comfortaa");
-@import url("https://fonts.googleapis.com/css?family=PT Mono");
+@import url("https://fonts.googleapis.com/css?family=Source Code Pro");
 @import "common.css";
 
 body {
@@ -13,7 +13,7 @@ body {
 }
 
 code {
-  font-family: "PT Mono", source-code-pro, Menlo, Monaco, Consolas,
+  font-family: "Source Code Pro", source-code-pro, Menlo, Monaco, Consolas,
     "Courier New", monospace;
 }
 

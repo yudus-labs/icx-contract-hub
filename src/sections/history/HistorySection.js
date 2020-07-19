@@ -1,7 +1,7 @@
 import React from "react";
 import { TabView } from "../../common/TabView";
 
-import "../../css/HistorySection.css";
+import "../../css/sections/HistorySection.css";
 
 class TransactionPanel extends React.Component {
   constructor(props) {
