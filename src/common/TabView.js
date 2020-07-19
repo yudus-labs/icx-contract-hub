@@ -78,6 +78,7 @@ export class TabView extends React.Component {
               : ""
           }
         />
+        <br />
       </div>
     );
   }
