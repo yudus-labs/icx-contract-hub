@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat");
 @import url("https://fonts.googleapis.com/css?family=Comfortaa");
 @import url("https://fonts.googleapis.com/css?family=Source Code Pro");
-@import "common.css";
+@import "./common/css/common.css";
 
 body {
   margin: 0;

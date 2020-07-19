@@ -1,0 +1,26 @@
+@import "../../common/css/common.css";
+
+.header-section {
+  background-color: var(--primary-bg-light);
+  color: var(--primary-bg-text);
+}
+
+.title-panel {
+  min-width: 350px;
+}
+
+#main-title {
+  height: 35px;
+  font-size: 35px;
+  font-family: "Comfortaa";
+  color: var(--secondary-cool-3);
+}
+
+#sub-title,
+#copyright {
+  height: 15px;
+  font-size: 15px;
+  font-family: "Source Code Pro" source-code-pro;
+  color: var(--primary-main-3);
+  padding: 15px 0 15px 0;
+}

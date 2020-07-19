@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { HorizonalSeparator, VerticalSeparator } from "./Util";
 
-import "../css/TabView.css";
+import "./TabView.css";
 
 function TabViewHeaderTitle(props) {
   return (
@@ -83,7 +83,6 @@ export class TabView extends React.Component {
               : ""
           }
         />
-        <br />
       </div>
     );
   }

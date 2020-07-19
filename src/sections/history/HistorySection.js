@@ -1,7 +1,7 @@
 import React from "react";
 import { TabView } from "../../common/TabView";
 
-import "../../css/sections/HistorySection.css";
+import "./HistorySection.css";
 
 class TransactionPanel extends React.Component {
   constructor(props) {
@@ -41,7 +41,7 @@ export class HistorySection extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid history-section">
+      <div className="container-fluid section-block history-section">
         <TabView
           tabModules={{
             titles: ["Transactions", "Internal Transactions"],

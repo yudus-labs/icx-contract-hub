@@ -42,6 +42,11 @@
   --secondary-cool-text: #f2fffa;
 }
 
+.section-block {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
 .custom-link {
   color: var(--primary-main-3);
 }

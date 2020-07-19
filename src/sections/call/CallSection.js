@@ -1,7 +1,7 @@
 import React from "react";
 import { TabView } from "../../common/TabView";
 
-import "../../css/sections/CallSection.css";
+import "./CallSection.css";
 
 class ContractCallPanel extends React.Component {
   constructor(props) {
@@ -26,7 +26,7 @@ export class CallSection extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid call-section">
+      <div className="container-fluid section-block call-section">
         <TabView
           tabModules={{
             titles: ["Contract Calls"],

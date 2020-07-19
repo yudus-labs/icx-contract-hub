@@ -1,7 +1,7 @@
 import React from "react";
 import { TabView } from "../../common/TabView";
 
-import "../../css/sections/ExtensionSection.css";
+import "./ExtensionSection.css";
 
 class AuthenticationPanel extends React.Component {
   constructor(props) {
@@ -84,7 +84,7 @@ export class ExtensionSection extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid extension-section">
+      <div className="container-fluid section-block extension-section">
         <TabView
           tabModules={{
             titles: ["Authentication", "Utilities", "Bookmarks", "Wallet Swarm", "Contract Stats"],

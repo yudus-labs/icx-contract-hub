@@ -1,4 +1,4 @@
-@import "common.css";
+@import "./css/common.css";
 
 .tab-view-header-title-active {
   height: 35px;
