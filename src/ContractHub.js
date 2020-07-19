@@ -8,28 +8,32 @@ import { CallSection } from "./sections/call/CallSection.js";
 
 import "./ContractHub.css";
 
-const NETWORKS = {
-  CUSTOM: {
-    LOOPCHAIN_ENDPOINT: "http://custom_loopchain_endpoint",
-    CHAINALYTIC_ENDPOINT: "http://custom_chainalytic_endpoint",
-    NETWORK_ID: "0",
+const NETWORKS = [
+  {
+    name: "Mainnet",
+    loopchain_endpoint: "https://ctz.solidwallet.io/api/v3",
+    chainalytic_endpoint: "https://yudus.dev/chainalytic-icon/api/mainnet",
+    network_id: "1",
   },
-  LOCAL: {
-    LOOPCHAIN_ENDPOINT: "http://localhost:9000/api/v3",
-    CHAINALYTIC_ENDPOINT: "http://localhost:5600",
-    NETWORK_ID: "0",
+  {
+    name: "Testnet",
+    loopchain_endpoint: "https://bicon.net.solidwallet.io/api/v3",
+    chainalytic_endpoint: "https://yudus.dev/chainalytic-icon/api/testnet",
+    network_id: "3",
   },
-  TESTNET: {
-    LOOPCHAIN_ENDPOINT: "https://bicon.net.solidwallet.io/api/v3",
-    CHAINALYTIC_ENDPOINT: "https://yudus.dev/chainalytic-icon/api/testnet",
-    NETWORK_ID: "3",
+  {
+    name: "Local",
+    loopchain_endpoint: "http://localhost:9000/api/v3",
+    chainalytic_endpoint: "http://localhost:5600",
+    network_id: "0",
   },
-  MAINNET: {
-    LOOPCHAIN_ENDPOINT: "https://ctz.solidwallet.io/api/v3",
-    CHAINALYTIC_ENDPOINT: "https://yudus.dev/chainalytic-icon/api/mainnet",
-    NETWORK_ID: "1",
+  {
+    name: "Custom",
+    loopchain_endpoint: "http://custom_loopchain_endpoint",
+    chainalytic_endpoint: "http://custom_chainalytic_endpoint",
+    network_id: "0",
   },
-};
+];
 
 const DEFAULT_CONTRACT = "cx69bcdf1753472c1444188ec3f5188657e30c8322"; // broof
 
@@ -46,7 +50,8 @@ class ContractHub extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      network: NETWORKS.MAINNET,
+      allNetworks: NETWORKS,
+      network: NETWORKS[0],
       auth: {
         pkey: "",
         keystore: "",
@@ -58,6 +63,7 @@ class ContractHub extends React.Component {
   }
 
   updateHubState = (data) => {
+    // console.log(data);
     this.setState(data);
   };
 

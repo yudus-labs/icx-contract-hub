@@ -13,8 +13,7 @@ body {
 }
 
 code {
-  font-family: "Source Code Pro", source-code-pro, Menlo, Monaco, Consolas,
-    "Courier New", monospace;
+  font-family: "Source Code Pro", source-code-pro, "Courier New", monospace;
 }
 
 .form-control:focus {

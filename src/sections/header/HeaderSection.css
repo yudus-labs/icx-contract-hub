@@ -24,3 +24,26 @@
   color: var(--primary-main-3);
   padding: 15px 0 15px 0;
 }
+
+.dropdown-menu {
+  background-color: var(--primary-bg-light);
+  color: var(--primary-bg-text);
+}
+
+.choose-network-dropdown {
+  padding: 5px 15px 5px 0;
+}
+
+.loopchain-info,
+.chainalytic-info,
+.network-id-info,
+.iconex-info {
+  color: var(--primary-main-3);
+  font-size: 15px;
+  padding: 5px 15px 5px 0;
+}
+
+.endpoint-input {
+  height: 30px;
+  font-size: 15px;
+}

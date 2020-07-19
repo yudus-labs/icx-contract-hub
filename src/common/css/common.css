@@ -43,9 +43,11 @@
 }
 
 .section-block {
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
+
+/* Custom link */
 
 .custom-link {
   color: var(--primary-main-3);
@@ -54,6 +56,8 @@
 .custom-link:hover {
   color: var(--secondary-cool-3) !important;
 }
+
+/* Separator */
 
 .horizonal-separator {
   height: 5px;
@@ -65,4 +69,67 @@
   width: 3px;
   background-color: var(--primary-bg-dark);
   margin: 0 15px 0 15px;
+}
+
+/* Custom hub button */
+
+.hub-btn-primary {
+  color: var(--primary-main-text);
+  background: var(--primary-main-2);
+  border: none;
+}
+.hub-btn-primary:active,
+.hub-btn-primary:hover,
+.hub-btn-primary:focus {
+  color: var(--primary-main-text) !important;
+  background: var(--primary-main-3) !important;
+  border: none !important;
+  border-style: none !important;
+  box-shadow: none !important;
+}
+
+.hub-btn-secondary {
+  color: var(--primary-main-text);
+  background: var(--primary-main-1);
+  border: none;
+}
+.hub-btn-secondary:active,
+.hub-btn-secondary:hover,
+.hub-btn-secondary:focus {
+  color: var(--primary-main-text) !important;
+  background: var(--primary-main-2) !important;
+  border: none !important;
+  border-style: none !important;
+  box-shadow: none !important;
+}
+
+/* Status label */
+
+.succeed-label {
+  font-size: 15px;
+  font-weight: bold;
+  height: 25px;
+  background-color: var(--secondary-cool-3);
+  color: var(--secondary-cool-text);
+  padding: 0 5px 5px 5px;
+  text-align: center;
+}
+
+.warning-label {
+  font-size: 15px;
+  font-weight: bold;
+  height: 25px;
+  background-color: var(--secondary-warm-3);
+  color: var(--secondary-warm-text);
+  padding: 0 5px 5px 5px;
+}
+
+.failed-label {
+  font-size: 15px;
+  font-weight: bold;
+  height: 25px;
+  background-color: var(--secondary-hot-3);
+  color: var(--secondary-hot-text);
+  padding: 0 5px 5px 5px;
+  text-align: start;
 }
