@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { HorizonalSeparator, VerticalSeparator } from "./Util";
 
 import "../css/TabView.css";
@@ -33,7 +34,11 @@ function TabViewHeader(props) {
             handleTitleClick={props.handleTitleClick}
             key={index}
           />,
-          index + 1 < props.tabTitles.length ? <VerticalSeparator /> : "",
+          index + 1 < props.tabTitles.length ? (
+            <VerticalSeparator key={index + "separator"} />
+          ) : (
+            ""
+          ),
         ])}
       </div>
     </div>
@@ -83,3 +88,27 @@ export class TabView extends React.Component {
     );
   }
 }
+
+TabViewHeaderTitle.propTypes = {
+  title: PropTypes.string,
+  active: PropTypes.bool,
+  index: PropTypes.number,
+  handleTitleClick: PropTypes.func,
+};
+
+TabViewHeader.propTypes = {
+  tabTitles: PropTypes.array,
+  currentTabId: PropTypes.number,
+  handleTitleClick: PropTypes.func,
+};
+
+TabViewBody.propTypes = {
+  currentTab: PropTypes.element,
+};
+
+TabView.propTypes = {
+  tabModules: PropTypes.shape({
+    titles: PropTypes.array,
+    panels: PropTypes.arrayOf(PropTypes.element),
+  }),
+};
