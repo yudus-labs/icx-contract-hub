@@ -49,3 +49,15 @@
 .custom-link:hover {
   color: var(--secondary-cool-3) !important;
 }
+
+.horizonal-separator {
+  height: 5px;
+  background-color: var(--primary-bg-dark);
+  margin: 15px 0 15px 0;
+}
+
+.vertical-separator {
+  width: 3px;
+  background-color: var(--primary-bg-dark);
+  margin: 0 15px 0 15px;
+}

@@ -1,4 +1,5 @@
 import React from "react";
+import { HorizonalSeparator, VerticalSeparator } from "./Util";
 
 import "../css/TabView.css";
 
@@ -24,15 +25,16 @@ function TabViewHeader(props) {
   return (
     <div className="container-fluid tab-view-header">
       <div className="row">
-        {props.tabTitles.map((title, index) => (
+        {props.tabTitles.map((title, index) => [
           <TabViewHeaderTitle
             title={title}
             index={index}
             active={index === props.currentTabId}
             handleTitleClick={props.handleTitleClick}
             key={index}
-          />
-        ))}
+          />,
+          index + 1 < props.tabTitles.length ? <VerticalSeparator /> : "",
+        ])}
       </div>
     </div>
   );
@@ -68,6 +70,7 @@ export class TabView extends React.Component {
           currentTabId={this.state.currentTabId}
           handleTitleClick={this.handleTitleClick}
         />
+        <HorizonalSeparator />
         <TabViewBody
           currentTab={
             this.state.currentTabId !== -1
