@@ -45,8 +45,10 @@ export class HistorySection extends React.Component {
         <TabView
           tabModules={{
             titles: ["Transactions", "Internal Transactions"],
-            panels: [<TransactionPanel />, <InternalTransactionPanel />],
+            panelTypes: [TransactionPanel, InternalTransactionPanel],
           }}
+          hubState={this.context.hubState}
+          updateHubState={this.context.updateHubState}
         />
       </div>
     );

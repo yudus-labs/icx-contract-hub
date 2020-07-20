@@ -1,80 +1,13 @@
 import React from "react";
+
 import { TabView } from "../../common/TabView";
+import { AuthenticationPanel } from "./panels/AuthenticationPanel";
+import { UtilityPanel } from "./panels/UtilityPanel";
+import { BookmarkPanel } from "./panels/BookmarkPanel";
+import { WalletSwarmPanel } from "./panels/WalletSwarmPanel";
+import { ContractStatsPanel } from "./panels/ContractStatsPanel";
 
 import "./ExtensionSection.css";
-
-class AuthenticationPanel extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    return (
-      <div className="container-fluid authentication-panel">
-        Auth Panel content
-      </div>
-    );
-  }
-}
-
-class UtilityPanel extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    return (
-      <div className="container-fluid utility-panel">Utility Panel content</div>
-    );
-  }
-}
-
-class BookmarkPanel extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    return (
-      <div className="container-fluid bookmark-panel">
-        Bookmark Panel content
-      </div>
-    );
-  }
-}
-
-class WalletSwarmPanel extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    return (
-      <div className="container-fluid wallet-swarm-panel">
-        Wallet Swarm Panel content
-      </div>
-    );
-  }
-}
-
-class ContractStatsPanel extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    return (
-      <div className="container-fluid contract-stats-panel">
-        Contract Stats Panel content
-      </div>
-    );
-  }
-}
 
 export class ExtensionSection extends React.Component {
   constructor(props) {
@@ -87,15 +20,23 @@ export class ExtensionSection extends React.Component {
       <div className="container-fluid section-block extension-section">
         <TabView
           tabModules={{
-            titles: ["Authentication", "Utilities", "Bookmarks", "Wallet Swarm", "Contract Stats"],
-            panels: [
-              <AuthenticationPanel />,
-              <UtilityPanel />,
-              <BookmarkPanel />,
-              <WalletSwarmPanel />,
-              <ContractStatsPanel />,
+            titles: [
+              "Authentication",
+              "Utilities",
+              "Bookmarks",
+              "Wallet Swarm",
+              "Contract Stats",
+            ],
+            panelTypes: [
+              AuthenticationPanel,
+              UtilityPanel,
+              BookmarkPanel,
+              WalletSwarmPanel,
+              ContractStatsPanel,
             ],
           }}
+          hubState={this.context.hubState}
+          updateHubState={this.context.updateHubState}
         />
       </div>
     );

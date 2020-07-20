@@ -45,9 +45,24 @@ function TabViewHeader(props) {
   );
 }
 
+function EmptyTabViewPanel(props) {
+  return "";
+}
+
 function TabViewBody(props) {
+  const ContentPanel =
+    props.currentTabId !== -1
+      ? props.panelTypes[props.currentTabId]
+      : EmptyTabViewPanel;
   return (
-    <div className="container-fluid tab-view-body">{props.currentTab}</div>
+    <div className="container-fluid tab-view-body">
+      {
+        <ContentPanel
+          hubState={props.hubState}
+          updateHubState={props.updateHubState}
+        />
+      }
+    </div>
   );
 }
 
@@ -77,11 +92,10 @@ export class TabView extends React.Component {
         />
         <HorizonalSeparator />
         <TabViewBody
-          currentTab={
-            this.state.currentTabId !== -1
-              ? this.state.tabModules.panels[this.state.currentTabId]
-              : ""
-          }
+          currentTabId={this.state.currentTabId}
+          panelTypes={this.state.tabModules.panelTypes}
+          hubState={this.props.hubState}
+          updateHubState={this.props.updateHubState}
         />
       </div>
     );
@@ -102,12 +116,17 @@ TabViewHeader.propTypes = {
 };
 
 TabViewBody.propTypes = {
-  currentTab: PropTypes.element,
+  currentTabId: PropTypes.number,
+  panelTypes: PropTypes.arrayOf(PropTypes.elementType),
+  hubState: PropTypes.object,
+  updateHubState: PropTypes.func,
 };
 
 TabView.propTypes = {
   tabModules: PropTypes.shape({
     titles: PropTypes.array,
-    panels: PropTypes.arrayOf(PropTypes.element),
+    panelTypes: PropTypes.arrayOf(PropTypes.elementType),
   }),
+  hubState: PropTypes.object,
+  updateHubState: PropTypes.func,
 };

@@ -30,8 +30,10 @@ export class CallSection extends React.Component {
         <TabView
           tabModules={{
             titles: ["Contract Calls"],
-            panels: [<ContractCallPanel />],
+            panelTypes: [ContractCallPanel],
           }}
+          hubState={this.context.hubState}
+          updateHubState={this.context.updateHubState}
         />
       </div>
     );
