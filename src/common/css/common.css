@@ -113,6 +113,7 @@
   color: var(--secondary-cool-text);
   padding: 0 5px 5px 5px;
   text-align: center;
+  border-radius: 4px;
 }
 
 .warning-label {
@@ -122,6 +123,7 @@
   background-color: var(--secondary-warm-3);
   color: var(--secondary-warm-text);
   padding: 0 5px 5px 5px;
+  border-radius: 4px;
 }
 
 .failed-label {
@@ -132,4 +134,18 @@
   color: var(--secondary-hot-text);
   padding: 0 5px 5px 5px;
   text-align: start;
+  border-radius: 4px;
+}
+
+/* Alert */
+.alert-error {
+  background-color: var(--secondary-hot-3);
+  color: var(--secondary-hot-text);
+  border-style: none;
+}
+
+.alert-success {
+  background-color: var(--secondary-cool-2);
+  color: var(--secondary-cool-text);
+  border-style: none;
 }
