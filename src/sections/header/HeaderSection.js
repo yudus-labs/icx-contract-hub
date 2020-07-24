@@ -114,7 +114,7 @@ ChainalyticInfo.propTypes = {
 function NetworkIdInfo(props) {
   return (
     <div className="row align-items-center justify-content-end network-id-info">
-      <div className="col-auto">Network ID</div>
+      <div className="col-auto">{props.network.name} | Network ID</div>
       <div className="col-2">
         <input
           type="text"
