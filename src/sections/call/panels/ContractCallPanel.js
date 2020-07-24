@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import { HorizonalSeparator, VerticalSeparator } from "../../../common/Util";
 import { IconApi } from "../../../chainApi/IconApi.js";
 
 import "./ContractCallPanel.css";
@@ -211,11 +212,15 @@ export class ApiItem extends React.Component {
     let failed;
 
     try {
-      const api = new IconApi({
-        endpoint: this.props.hubState.network.loopchain_endpoint,
-        nid: this.props.hubState.network.network_id,
-        contract: this.props.hubState.contract,
-      });
+      const api = new IconApi(
+        {
+          endpoint: this.props.hubState.network.loopchain_endpoint,
+          nid: this.props.hubState.network.network_id,
+          contract: this.props.hubState.contract,
+        },
+        {},
+        this.props.stepLimit
+      );
       result = await api.call(method, params);
       failed = false;
     } catch (err) {
@@ -253,7 +258,8 @@ export class ApiItem extends React.Component {
           keystore: this.props.hubState.auth.keystore,
           keystorePass: this.props.hubState.auth.keystorePass,
           iconexWallet: this.props.hubState.auth.iconexWallet,
-        }
+        },
+        this.props.stepLimit
       );
 
       txHash = await api.sendCallTx(method, params, value);
@@ -278,11 +284,15 @@ export class ApiItem extends React.Component {
     let failed = false;
 
     try {
-      const api = new IconApi({
-        endpoint: this.props.hubState.network.loopchain_endpoint,
-        nid: this.props.hubState.network.network_id,
-        contract: this.props.hubState.contract,
-      });
+      const api = new IconApi(
+        {
+          endpoint: this.props.hubState.network.loopchain_endpoint,
+          nid: this.props.hubState.network.network_id,
+          contract: this.props.hubState.contract,
+        },
+        {},
+        this.props.stepLimit
+      );
       txResult = await api.checkTx(txHash);
       failed = false;
     } catch (err) {
@@ -298,7 +308,7 @@ export class ApiItem extends React.Component {
 
   render() {
     return (
-      <div className="row my-3 ApiItem">
+      <div className="row my-3 api-item">
         <div className="container">
           <div className="row">
             <div
@@ -336,7 +346,7 @@ export class ApiItem extends React.Component {
             ? this.state.methodParams.map((param, index) => (
                 <div className="row my-2" key={index}>
                   <div className="col">
-                    <div className="row">
+                    <div className="row align-items-center">
                       <div className="col-auto">
                         <var className="param-name">{param.name}</var> :{" "}
                         <code>{param.type}</code>
@@ -379,24 +389,31 @@ ApiItem.propTypes = {
   readonly: PropTypes.bool,
 
   hubState: PropTypes.object,
+  stepLimit: PropTypes.string,
 };
 
 function ApiList(props) {
-  return props.methods.map((item, index) => (
-    <ApiItem
-      methodName={item.methodName}
-      methodParams={item.methodParams}
-      payable={item.payable}
-      readonly={props.readonly}
-      hubState={props.hubState}
-      key={index + item.methodName}
-    />
-  ));
+  return (
+    <div className="container api-list">
+      {props.methods.map((item, index) => (
+        <ApiItem
+          methodName={item.methodName}
+          methodParams={item.methodParams}
+          payable={item.payable}
+          readonly={props.readonly}
+          hubState={props.hubState}
+          stepLimit={props.stepLimit}
+          key={index + item.methodName}
+        />
+      ))}
+    </div>
+  );
 }
 ApiList.propTypes = {
   methods: PropTypes.array,
   readonly: PropTypes.bool,
   hubState: PropTypes.object,
+  stepLimit: PropTypes.string,
 };
 
 // ================================================================================================
@@ -415,6 +432,7 @@ export class ContractCallPanel extends React.Component {
       contractName: "",
       noContract: true,
       fetching: false,
+      stepLimit: "500000000",
     };
   }
 
@@ -554,34 +572,51 @@ export class ContractCallPanel extends React.Component {
           ) : (
             ""
           )}
+
+          <VerticalSeparator />
+
+          <div className="col-auto align-self-center">Step limit</div>
+
+          <div className="col-auto">
+            <input
+              type="text"
+              className="form-control"
+              id="step-limit-input"
+              value={this.state.stepLimit}
+              onChange={(e) => this.setState({ stepLimit: e.target.value })}
+              title="Step limit"
+              placeholder="Step limit"
+              required
+            />
+          </div>
         </div>
 
         <div className="row">
           <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <div className="container">
-              <h5 id="api-list-title">Readonly methods</h5>
-              <div className="container">
-                <ApiList
-                  methods={this.state.readonlyMethods}
-                  readonly={true}
-                  hubState={this.props.hubState}
-                />
-              </div>
-              {this.state.readonlyMethods.length > 0 ? "" : "...empty..."}
-            </div>
+            <h5 className="api-list-title">Readonly</h5>
+            <HorizonalSeparator />
+
+            <ApiList
+              methods={this.state.readonlyMethods}
+              readonly={true}
+              hubState={this.props.hubState}
+              stepLimit={this.state.stepLimit}
+            />
+
+            {this.state.readonlyMethods.length > 0 ? "" : "...empty..."}
           </div>
           <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <div className="container">
-              <h5 id="api-list-title">Writable methods</h5>
-              <div className="container">
-                <ApiList
-                  methods={this.state.methods}
-                  readonly={false}
-                  hubState={this.props.hubState}
-                />
-              </div>
-              {this.state.methods.length > 0 ? "" : "...empty..."}
-            </div>
+            <h5 id="api-list-title">Writable</h5>
+            <HorizonalSeparator />
+
+            <ApiList
+              methods={this.state.methods}
+              readonly={false}
+              hubState={this.props.hubState}
+              stepLimit={this.state.stepLimit}
+            />
+
+            {this.state.methods.length > 0 ? "" : "...empty..."}
           </div>
         </div>
       </div>

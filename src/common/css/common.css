@@ -144,6 +144,13 @@
 }
 
 /* Alert */
+
+.alert-info {
+  background-color: var(--secondary-cool-1);
+  color: var(--secondary-cool-dark-text);
+  border-style: none;
+}
+
 .alert-error {
   background-color: var(--secondary-hot-3);
   color: var(--secondary-hot-text);

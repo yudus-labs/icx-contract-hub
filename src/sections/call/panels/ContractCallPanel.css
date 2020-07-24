@@ -1,6 +1,6 @@
 @import "../../../common/css/common.css";
 
-.ApiItem {
+.api-item {
   background-color: var(--primary-bg-1);
   color: var(--primary-bg-text);
 }
@@ -24,17 +24,13 @@
   height: 30px;
 }
 
-#api-list-title {
-  background-color: var(--primary-bg-2);
-  color: var(--primary-bg-text);
-  padding: 10px;
+#step-limit-input {
+  height: 30px;
 }
 
-#contract-api-title {
-  background-color: var(--primary-bg-dark);
-  color: var(--primary-bg-dark-text);
-  padding: 5px;
-  padding-left: 20px;
+.api-list-title {
+  color: var(--primary-bg-text);
+  background: none;
 }
 
 .contract-name {
