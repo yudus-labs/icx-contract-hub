@@ -7,11 +7,12 @@ import IconService, {
 } from "icon-sdk-js";
 
 export class IconApi {
-  constructor(networkInfo, authInfo) {
+  constructor(networkInfo, authInfo, stepLimit) {
     this.endpoint = networkInfo.endpoint;
     this.nid = networkInfo.nid;
     this.contract = networkInfo.contract;
     this.authInfo = authInfo;
+    this.stepLimit = stepLimit;
   }
 
   // Privates methods
@@ -159,7 +160,7 @@ export class IconApi {
         this.contract,
         method,
         value,
-        "500000000",
+        this.stepLimit,
         params
       );
       try {
@@ -187,7 +188,7 @@ export class IconApi {
         this.contract,
         method,
         value,
-        "500000000",
+        this.stepLimit,
         params
       );
 
