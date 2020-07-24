@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
+import { IconApi } from "../../chainApi/IconApi.js";
+import { ChainalyticApi } from "../../chainApi/ChainalyticApi.js";
 import { HorizonalSeparator } from "../../common/Util";
 import "./HeaderSection.css";
 
@@ -58,9 +60,31 @@ ChooseNetworkDropdown.propTypes = {
 };
 
 function LoopchainInfo(props) {
+  const [state, setState] = useState({
+    height: "Fetching height...",
+  });
+
+  useEffect(() => {
+    const iconApi = new IconApi({
+      endpoint: props.network.loopchain_endpoint,
+      nid: props.network.network_id,
+      contract: "",
+    });
+
+    const interval = setInterval(async () => {
+      const block = await iconApi.getLastBlock();
+      const height = block ? block.height.toLocaleString() : "Unknown height";
+      setState({ height: height });
+      // console.log(`Loopchain height: ${height}`);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [props.network.loopchain_endpoint, props.network.network_id]);
+
   return (
     <div className="row align-items-center justify-content-end loopchain-info">
-      <div className="col-auto">Loopchain</div>
+      <div className="col-auto">
+        <b>{state.height}</b> | Loopchain
+      </div>
       <div className="col">
         <input
           type="text"
@@ -75,7 +99,6 @@ function LoopchainInfo(props) {
           placeholder="Loopchain endpoint here"
         />
       </div>
-      <div className="col-auto">Height 10,000,000</div>
     </div>
   );
 }
@@ -85,9 +108,29 @@ LoopchainInfo.propTypes = {
 };
 
 function ChainalyticInfo(props) {
+  const [state, setState] = useState({
+    height: "Fetching height...",
+  });
+
+  useEffect(() => {
+    const chainalyticApi = new ChainalyticApi(
+      props.network.chainalytic_endpoint
+    );
+
+    const interval = setInterval(async () => {
+      const result = await chainalyticApi.lastBlockHeight("contract_history");
+      const height = result ? result.result.toLocaleString() : "Unknown height";
+      setState({ height: height });
+      // console.log(`Chainalytic height: ${height}`);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [props.network.chainalytic_endpoint]);
+
   return (
     <div className="row align-items-center justify-content-end chainalytic-info">
-      <div className="col-auto">Chainalytic</div>
+      <div className="col-auto">
+        <b>{state.height}</b> | Chainalytic
+      </div>
       <div className="col">
         <input
           type="text"
@@ -102,7 +145,6 @@ function ChainalyticInfo(props) {
           placeholder="Chainalytic endpoint here"
         />
       </div>
-      <div className="col-auto">Height 9,999,990</div>
     </div>
   );
 }
@@ -114,7 +156,9 @@ ChainalyticInfo.propTypes = {
 function NetworkIdInfo(props) {
   return (
     <div className="row align-items-center justify-content-end network-id-info">
-      <div className="col-auto">{props.network.name} | Network ID</div>
+      <div className="col-auto">
+        <b>{props.network.name}</b> | Network ID
+      </div>
       <div className="col-2">
         <input
           type="text"
