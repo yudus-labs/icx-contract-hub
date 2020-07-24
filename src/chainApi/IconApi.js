@@ -210,4 +210,14 @@ export class IconApi {
     const iconService = new IconService(provider);
     return await iconService.getScoreApi(this.contract).execute();
   }
+
+  async getLastBlock() {
+    try {
+      const provider = new HttpProvider(this.endpoint);
+      const iconService = new IconService(provider);
+      return await iconService.getLastBlock().execute();
+    } catch (err) {
+      return null;
+    }
+  }
 }
