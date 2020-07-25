@@ -22,6 +22,10 @@ code {
   outline: 0 none;
 }
 
+.form-control {
+  height: 30px;
+}
+
 .btn-primary {
   -webkit-appearance: none;
   -moz-appearance: none;
