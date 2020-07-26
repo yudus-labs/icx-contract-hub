@@ -3,35 +3,8 @@ import { TabView } from "../../common/TabView";
 
 import "./HistorySection.css";
 
-class TransactionPanel extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    return (
-      <div className="container-fluid transaction-panel">
-        Transaction Panel content
-      </div>
-    );
-  }
-}
-
-class InternalTransactionPanel extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    return (
-      <div className="container-fluid internal-transaction-panel">
-        Internal Transaction Panel content
-      </div>
-    );
-  }
-}
+import { TransactionPanel } from "./panels/TransactionPanel";
+import { InternalTransactionPanel } from "./panels/InternalTransactionPanel";
 
 export class HistorySection extends React.Component {
   constructor(props) {

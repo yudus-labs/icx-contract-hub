@@ -1,0 +1,14 @@
+@import "./css/common.css";
+
+.hash-cell,
+.block-cell,
+.address-cell {
+  font-family: "Source Code Pro", source-code-pro, "Courier New", monospace;
+  color: var(--primary-main-2);
+}
+
+.age-cell,
+.amount-cell,
+.fee-cell {
+  color: var(--primary-bg-dark);
+}

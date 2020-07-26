@@ -29,7 +29,7 @@ export class ChainalyticApi {
       params: { api_id: apiId, api_params: apiParams },
     };
     const response = await this._postData(this.endpoint, data);
-    return response ? JSON.parse(response).result : null
+    return response ? JSON.parse(response).result : null;
   }
 
   async latestUpstreamBlockHeight() {
@@ -52,14 +52,14 @@ export class ChainalyticApi {
   async contractInternalTransaction(address, size) {
     return await this._callApi("contract_internal_transaction", {
       address: address,
-      size: size,
+      size: parseInt(size),
     });
   }
 
   async contractTransaction(address, size) {
     return await this._callApi("contract_transaction", {
       address: address,
-      size: size,
+      size: parseInt(size),
     });
   }
 
