@@ -150,11 +150,6 @@ export class TableView extends React.Component {
   render() {
     return (
       <div className="container-fluid table-view">
-        {this.props.rows.length > 0 ? (
-          ""
-        ) : (
-          <div className="my-4 fetching">Fetching data...</div>
-        )}
         <div className="row">
           {this.props.colInfoList.map((colInfo, index) => [
             <VerticalSeparator key={index + "separator"} />,
@@ -166,6 +161,11 @@ export class TableView extends React.Component {
             />,
           ])}
         </div>
+        {this.props.rows.length > 0 ? (
+          ""
+        ) : (
+          <div className="my-4 fetching">Fetching data...</div>
+        )}
       </div>
     );
   }
