@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { VerticalSeparator } from "./Util";
-import { ChainalyticApi } from "../chainApi/ChainalyticApi";
 
 import "./TableView.css";
 
@@ -13,8 +12,8 @@ export function HashCell(props) {
     <div className="row justify-content-center hash-cell">
       {props.cellValue.slice(0, 8)}..
       {props.cellValue.slice(
-        props.cellValue.length - 7,
-        props.cellValue.length - 1
+        props.cellValue.length - 6,
+        props.cellValue.length
       )}
     </div>
   );
@@ -37,8 +36,11 @@ BlockCell.propTypes = {
 };
 
 export function AgeCell(props) {
+  const d = new Date(parseInt(props.cellValue / 1000));
   return (
-    <div className="row justify-content-center age-cell">{props.cellValue}</div>
+    <div className="row justify-content-center age-cell">
+      {`${d.toLocaleDateString()} ${d.toLocaleTimeString()}`}
+    </div>
   );
 }
 AgeCell.propTypes = {
@@ -51,8 +53,8 @@ export function AddressCell(props) {
     <div className="row justify-content-center address-cell">
       {props.cellValue.slice(0, 8)}..
       {props.cellValue.slice(
-        props.cellValue.length - 7,
-        props.cellValue.length - 1
+        props.cellValue.length - 6,
+        props.cellValue.length
       )}
     </div>
   );
@@ -65,7 +67,7 @@ AddressCell.propTypes = {
 export function AmountCell(props) {
   return (
     <div className="row justify-content-center amount-cell">
-      {props.cellValue || 0} ICX
+      {props.cellValue ? props.cellValue.toFixed(4) : 0} ICX
     </div>
   );
 }
@@ -86,16 +88,22 @@ FeeCell.propTypes = {
   hubState: PropTypes.object,
 };
 
-export function ExecuteTxCell(props) {
+export function CheckTxCell(props) {
   return (
-    <div className="row justify-content-center execute-cell">
-      {props.cellValue}
+    <div className="row justify-content-center check-tx-cell">
+      <div
+        className="btn btn-primary btn-sm hub-btn-primary check-tx-button"
+        onClick={async () => props.callback(props.cellValue)}
+      >
+        ►
+      </div>
     </div>
   );
 }
-ExecuteTxCell.propTypes = {
+CheckTxCell.propTypes = {
   cellValue: PropTypes.any,
   hubState: PropTypes.object,
+  callback: PropTypes.func,
 };
 
 // ================================================================================================
@@ -116,6 +124,7 @@ function Column(props) {
           <Cell
             cellValue={props.colInfo.rowKey ? row[props.colInfo.rowKey] : ""}
             hubState={props.hubState}
+            callback={props.colInfo.callback}
             key={index}
           />
         )),
@@ -141,6 +150,11 @@ export class TableView extends React.Component {
   render() {
     return (
       <div className="container-fluid table-view">
+        {this.props.rows.length > 0 ? (
+          ""
+        ) : (
+          <div className="my-4 fetching">Fetching data...</div>
+        )}
         <div className="row">
           {this.props.colInfoList.map((colInfo, index) => [
             <VerticalSeparator key={index + "separator"} />,

@@ -162,3 +162,12 @@
   color: var(--secondary-cool-text);
   border-style: none;
 }
+
+/* Info text */
+
+.fetching {
+  margin-left: 10px;
+  margin-top: 5px;
+  font-style: italic;
+  color: var(--primary-dark);
+}

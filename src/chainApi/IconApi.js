@@ -205,6 +205,12 @@ export class IconApi {
     return await iconService.getTransactionResult(txHash).execute();
   }
 
+  async getTx(txHash) {
+    const provider = new HttpProvider(this.endpoint);
+    const iconService = new IconService(provider);
+    return await iconService.getTransaction(txHash).execute();
+  }
+
   async getScoreApi() {
     const provider = new HttpProvider(this.endpoint);
     const iconService = new IconService(provider);

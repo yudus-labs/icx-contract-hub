@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { ChainalyticApi } from "../../../chainApi/ChainalyticApi.js";
+import { IconApi } from "../../../chainApi/IconApi.js";
 import {
   TableView,
   HashCell,
@@ -9,7 +10,7 @@ import {
   AddressCell,
   AmountCell,
   FeeCell,
-  ExecuteTxCell,
+  CheckTxCell,
 } from "../../../common/TableView";
 
 import "./TransactionPanel.css";
@@ -18,6 +19,8 @@ export function TransactionPanel(props) {
   const [state, setState] = useState({
     txs: [],
     numOfTx: 10,
+    txResult: {},
+    txHash: "",
   });
 
   useEffect(() => {
@@ -29,9 +32,14 @@ export function TransactionPanel(props) {
         props.hubState.contract,
         state.numOfTx
       );
-      txs = txs ? txs.result.transactions : [];
-      setState((s) => ({ numOfTx: s.numOfTx, txs: txs.reverse() }));
+      txs = txs ? txs.result.transactions.reverse() : [];
       // console.log(`Transactions: ${JSON.stringify(txs, null, 2)}`);
+      setState((s) => ({
+        numOfTx: s.numOfTx,
+        txs: txs,
+        txResult: s.txResult,
+        txHash: s.txHash,
+      }));
     }, 2000);
     return () => clearInterval(interval);
   }, [
@@ -40,21 +48,65 @@ export function TransactionPanel(props) {
     state,
   ]);
 
+  const checkTx = async (txHash) => {
+    let txResult = "";
+
+    try {
+      const api = new IconApi({
+        endpoint: props.hubState.network.loopchain_endpoint,
+        nid: props.hubState.network.network_id,
+        contract: props.hubState.contract,
+      });
+      txResult = await api.checkTx(txHash);
+    } catch (err) {
+      txResult = err;
+    }
+
+    setState((s) => ({
+      numOfTx: s.numOfTx,
+      txs: s.txs,
+      txResult: txResult,
+      txHash: txHash,
+    }));
+  };
+
   return (
     <div className="container-fluid transaction-panel">
-      <TableView
-        colInfoList={[
-          { rowKey: "hash", title: "Hash", cellType: HashCell },
-          { rowKey: "height", title: "Block", cellType: BlockCell },
-          { rowKey: "timestamp", title: "Age", cellType: AgeCell },
-          { rowKey: "from", title: "From", cellType: AddressCell },
-          { rowKey: "value", title: "Amount", cellType: AmountCell },
-          { rowKey: "fee", title: "Fee", cellType: FeeCell },
-          { rowKey: "", title: "", cellType: ExecuteTxCell },
-        ]}
-        rows={state.txs}
-        hubState={props.hubState}
-      />
+      <div className="row">
+        <div className="col-auto">
+          <TableView
+            colInfoList={[
+              { rowKey: "hash", title: "Hash", cellType: HashCell },
+              { rowKey: "height", title: "Block", cellType: BlockCell },
+              { rowKey: "timestamp", title: "Local Time", cellType: AgeCell },
+              { rowKey: "from", title: "From", cellType: AddressCell },
+              { rowKey: "value", title: "Amount", cellType: AmountCell },
+              { rowKey: "fee", title: "Fee", cellType: FeeCell },
+              {
+                rowKey: "hash",
+                title: ">>",
+                cellType: CheckTxCell,
+                callback: checkTx,
+              },
+            ]}
+            rows={state.txs}
+            hubState={props.hubState}
+          />
+        </div>
+        <div className="col">
+          <div className="row my-1">
+            <b>Tx Result of : </b> &nbsp;{state.txHash}
+          </div>
+          <div className="row">
+            <textarea
+              value={JSON.stringify(state.txResult, null, 2)}
+              readOnly={true}
+              className="form-control text-area"
+              rows="10"
+            />
+          </div>
+        </div>
+      </div>
       <br />
       <div className="row align-items-center">
         <div className="col-auto">Show latest</div>
@@ -67,12 +119,22 @@ export function TransactionPanel(props) {
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.persist();
-                setState((s) => ({ txs: s.txs, numOfTx: e.target.value }));
+                setState((s) => ({
+                  txs: s.txs,
+                  numOfTx: e.target.value,
+                  txResult: s.txResult,
+                  txHash: s.txHash,
+                }));
               }
             }}
             onChange={(e) => {
               e.persist();
-              setState((s) => ({ txs: s.txs, numOfTx: e.target.value }));
+              setState((s) => ({
+                txs: s.txs,
+                numOfTx: e.target.value,
+                txResult: s.txResult,
+                txHash: s.txHash,
+              }));
             }}
             title="Number of latest transactions"
             placeholder="Number of latest transactions"
