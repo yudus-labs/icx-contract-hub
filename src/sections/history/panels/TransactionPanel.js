@@ -21,6 +21,8 @@ export function TransactionPanel(props) {
     numOfTx: 10,
     txResult: {},
     txHash: "",
+    maxTx: "N/A",
+    txCount: 0,
   });
 
   useEffect(() => {
@@ -33,12 +35,21 @@ export function TransactionPanel(props) {
         state.numOfTx
       );
       txs = txs ? txs.result.transactions.reverse() : [];
+
+      let maxTx = await chainalyticApi.maxTxPerContract();
+      maxTx = maxTx ? maxTx.result : "N/A";
+
+      let txCount = await chainalyticApi.contractStats(props.hubState.contract);
+      txCount = txCount ? txCount.result.stats.tx_count : 0;
+
       // console.log(`Transactions: ${JSON.stringify(txs, null, 2)}`);
       setState((s) => ({
         numOfTx: s.numOfTx,
         txs: txs,
         txResult: s.txResult,
         txHash: s.txHash,
+        maxTx: maxTx,
+        txCount: txCount,
       }));
     }, 2000);
     return () => clearInterval(interval);
@@ -67,6 +78,8 @@ export function TransactionPanel(props) {
       txs: s.txs,
       txResult: txResult,
       txHash: txHash,
+      maxTx: s.maxTx,
+      txCount: s.txCount,
     }));
   };
 
@@ -108,8 +121,9 @@ export function TransactionPanel(props) {
         </div>
       </div>
       <br />
+
       <div className="row align-items-center">
-        <div className="col-auto">Show latest</div>
+        <div className="col-auto">Show last</div>
         <div className="col-1">
           <input
             type="text"
@@ -124,6 +138,8 @@ export function TransactionPanel(props) {
                   numOfTx: e.target.value,
                   txResult: s.txResult,
                   txHash: s.txHash,
+                  maxTx: s.maxTx,
+                  txCount: s.txCount,
                 }));
               }
             }}
@@ -134,6 +150,8 @@ export function TransactionPanel(props) {
                 numOfTx: e.target.value,
                 txResult: s.txResult,
                 txHash: s.txHash,
+                maxTx: s.maxTx,
+                txCount: s.txCount,
               }));
             }}
             title="Number of latest transactions"
@@ -141,7 +159,11 @@ export function TransactionPanel(props) {
             required
           />
         </div>
-        <div className="col-auto">transactions</div>
+        <div className="col-auto">
+          {" "}
+          of latest {state.maxTx} transactions ({" "}
+          {state.txCount.toLocaleString()} in total )
+        </div>
       </div>
     </div>
   );
