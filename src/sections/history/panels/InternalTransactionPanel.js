@@ -23,24 +23,49 @@ export function InternalTransactionPanel(props) {
     txHash: "",
     maxTx: "N/A",
     txCount: 0,
+    contractName: "N/A",
   });
 
   useEffect(() => {
     const chainalyticApi = new ChainalyticApi(
       props.hubState.network.chainalytic_endpoint
     );
+    const iconApi = new IconApi({
+      endpoint: props.hubState.network.loopchain_endpoint,
+      nid: props.hubState.network.network_id,
+      contract: props.hubState.contract,
+    });
+
     const interval = setInterval(async () => {
       let txs = await chainalyticApi.contractInternalTransaction(
         props.hubState.contract,
         state.numOfTx
       );
-      txs = txs ? txs.result.transactions.reverse() : [];
+      try {
+        txs = txs.result.transactions.reverse();
+      } catch {
+        txs = [];
+      }
 
       let maxTx = await chainalyticApi.maxTxPerContract();
-      maxTx = maxTx ? maxTx.result : "N/A";
+      try {
+        maxTx = maxTx.result;
+      } catch {
+        maxTx = "N/A";
+      }
 
       let txCount = await chainalyticApi.contractStats(props.hubState.contract);
-      txCount = txCount ? txCount.result.stats.itx_count : 0;
+      try {
+        txCount = txCount.result.stats.itx_count;
+      } catch {
+        txCount = 0;
+      }
+
+      try {
+        var cxName = await iconApi.call("name", {});
+      } catch (err) {
+        cxName = "Contract not found";
+      }
 
       // console.log(`Transactions: ${JSON.stringify(txs, null, 2)}`);
       setState((s) => ({
@@ -50,11 +75,14 @@ export function InternalTransactionPanel(props) {
         txHash: s.txHash,
         maxTx: maxTx,
         txCount: txCount,
+        contractName: cxName,
       }));
     }, 2000);
     return () => clearInterval(interval);
   }, [
     props.hubState.network.chainalytic_endpoint,
+    props.hubState.network.loopchain_endpoint,
+    props.hubState.network.network_id,
     props.hubState.contract,
     state,
   ]);
@@ -163,6 +191,13 @@ export function InternalTransactionPanel(props) {
           {" "}
           of latest {state.maxTx} transactions ({" "}
           {state.txCount.toLocaleString()} in total )
+        </div>
+      </div>
+      <br />
+      <div className="row">
+        <div className="col-auto">
+          Contract name : <b>{state.contractName}</b> | Address :{" "}
+          <b>{props.hubState.contract}</b>
         </div>
       </div>
     </div>
