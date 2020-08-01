@@ -12,7 +12,7 @@ export class ContractStatsPanel extends React.Component {
   render() {
     return (
       <div className="container-fluid contract-stats-panel">
-        Contract Stats Panel content
+        Coming soon...
       </div>
     );
   }

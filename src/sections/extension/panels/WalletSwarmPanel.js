@@ -12,7 +12,7 @@ export class WalletSwarmPanel extends React.Component {
   render() {
     return (
       <div className="container-fluid wallet-swarm-panel">
-        Wallet Swarm Panel content
+        Coming soon...
       </div>
     );
   }
