@@ -21,16 +21,16 @@ export class ExtensionSection extends React.Component {
         <TabView
           tabModules={{
             titles: [
+              "Bookmarks",
               "Authentication",
               "Utilities",
-              "Bookmarks",
               "Wallet Swarm",
               "Contract Stats",
             ],
             panelTypes: [
+              BookmarkPanel,
               AuthenticationPanel,
               UtilityPanel,
-              BookmarkPanel,
               WalletSwarmPanel,
               ContractStatsPanel,
             ],
