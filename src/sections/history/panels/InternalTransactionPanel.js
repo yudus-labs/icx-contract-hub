@@ -108,6 +108,7 @@ export function InternalTransactionPanel(props) {
       txHash: txHash,
       maxTx: s.maxTx,
       txCount: s.txCount,
+      contractName: s.contractName,
     }));
   };
 

@@ -108,6 +108,7 @@ export function TransactionPanel(props) {
       txHash: txHash,
       maxTx: s.maxTx,
       txCount: s.txCount,
+      contractName: s.contractName,
     }));
   };
 
