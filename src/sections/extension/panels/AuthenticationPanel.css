@@ -1,0 +1,8 @@
+@import "../../../common/css/common.css";
+
+.iconex-wallet-address {
+  background-color: var(--secondary-cool-2);
+  color: var(--secondary-cool-text);
+  padding: 3px 10px 3px 10px;
+  border-radius: 5px;
+}

@@ -1,0 +1,26 @@
+@import "./css/common.css";
+
+.hash-cell,
+.block-cell,
+.address-cell {
+  font-family: "Source Code Pro", source-code-pro, "Courier New", monospace;
+  color: var(--primary-main-2);
+  height: 25px;
+}
+
+.age-cell,
+.amount-cell,
+.fee-cell {
+  color: var(--primary-bg-dark);
+  height: 25px;
+}
+.check-tx-cell {
+  height: 25px;
+}
+
+.check-tx-button {
+  height: 20px;
+  font-size: 10px;
+  color: var(--primary-bg-white);
+  background-color: var(--primary-main-2);
+}

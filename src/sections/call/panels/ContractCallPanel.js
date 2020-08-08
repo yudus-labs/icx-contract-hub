@@ -1,6 +1,13 @@
 import React from "react";
-import { IconApi } from "./IconApi.js";
-import "./css/ContractApi.css";
+import PropTypes from "prop-types";
+
+import { HorizonalSeparator, VerticalSeparator } from "../../../common/Util";
+import { IconApi } from "../../../chainApi/IconApi.js";
+
+import "./ContractCallPanel.css";
+
+// ================================================================================================
+// Output component
 
 function TxResultTitle(props) {
   if (props.checkFailed) {
@@ -26,6 +33,10 @@ function TxResultTitle(props) {
     </div>
   );
 }
+TxResultTitle.propTypes = {
+  checkFailed: PropTypes.bool,
+  result: PropTypes.object,
+};
 
 function TxTitle(props) {
   const cssClass = props.txError
@@ -37,6 +48,9 @@ function TxTitle(props) {
     </h6>
   );
 }
+TxTitle.propTypes = {
+  txError: PropTypes.bool,
+};
 
 function CallResultTitle(props) {
   const cssClass = props.failed ? "error-result-title" : "succeed-result-title";
@@ -50,6 +64,9 @@ function CallResultTitle(props) {
     </div>
   );
 }
+CallResultTitle.propTypes = {
+  failed: PropTypes.bool,
+};
 
 function Output(props) {
   return (
@@ -65,7 +82,7 @@ function Output(props) {
               <div className="col-auto">
                 <div
                   type="button"
-                  className="btn btn-secondary btn-sm checktx-button"
+                  className="btn btn-secondary btn-sm hub-btn-secondary"
                   onClick={props.checkTx}
                 >
                   Check Tx
@@ -127,6 +144,19 @@ function Output(props) {
     </div>
   );
 }
+Output.propTypes = {
+  txHash: PropTypes.string,
+  txError: PropTypes.bool,
+  checkTx: PropTypes.func,
+
+  callResult: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  callFailed: PropTypes.bool,
+  txResult: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  txCheckFailed: PropTypes.bool,
+};
+
+// ================================================================================================
+// ApiList and ApiItem
 
 export class ApiItem extends React.Component {
   constructor(props) {
@@ -182,11 +212,15 @@ export class ApiItem extends React.Component {
     let failed;
 
     try {
-      const api = new IconApi({
-        endpoint: this.context.explorerState.endpoint,
-        nid: this.context.explorerState.nid,
-        contract: this.context.explorerState.contract,
-      });
+      const api = new IconApi(
+        {
+          endpoint: this.props.hubState.network.loopchain_endpoint,
+          nid: this.props.hubState.network.network_id,
+          contract: this.props.hubState.contract,
+        },
+        {},
+        this.props.stepLimit
+      );
       result = await api.call(method, params);
       failed = false;
     } catch (err) {
@@ -215,16 +249,17 @@ export class ApiItem extends React.Component {
     try {
       const api = new IconApi(
         {
-          endpoint: this.context.explorerState.endpoint,
-          nid: this.context.explorerState.nid,
-          contract: this.context.explorerState.contract,
+          endpoint: this.props.hubState.network.loopchain_endpoint,
+          nid: this.props.hubState.network.network_id,
+          contract: this.props.hubState.contract,
         },
         {
-          pkey: this.context.explorerState.pkey,
-          keystore: this.context.explorerState.keystore,
-          keystorePass: this.context.explorerState.keystorePass,
-          iconexWallet: this.context.explorerState.iconexWallet,
-        }
+          pkey: this.props.hubState.auth.pkey,
+          keystore: this.props.hubState.auth.keystore,
+          keystorePass: this.props.hubState.auth.keystorePass,
+          iconexWallet: this.props.hubState.auth.iconexWallet,
+        },
+        this.props.stepLimit
       );
 
       txHash = await api.sendCallTx(method, params, value);
@@ -249,11 +284,15 @@ export class ApiItem extends React.Component {
     let failed = false;
 
     try {
-      const api = new IconApi({
-        endpoint: this.context.explorerState.endpoint,
-        nid: this.context.explorerState.nid,
-        contract: this.context.explorerState.contract,
-      });
+      const api = new IconApi(
+        {
+          endpoint: this.props.hubState.network.loopchain_endpoint,
+          nid: this.props.hubState.network.network_id,
+          contract: this.props.hubState.contract,
+        },
+        {},
+        this.props.stepLimit
+      );
       txResult = await api.checkTx(txHash);
       failed = false;
     } catch (err) {
@@ -269,12 +308,12 @@ export class ApiItem extends React.Component {
 
   render() {
     return (
-      <div className="row my-3 ApiItem">
+      <div className="row my-3 api-item">
         <div className="container">
           <div className="row">
             <div
               type="button"
-              className="btn btn-primary api-button"
+              className="btn btn-primary hub-btn-primary api-button"
               onClick={this.handleClick}
             >
               {this.state.methodName}
@@ -307,7 +346,7 @@ export class ApiItem extends React.Component {
             ? this.state.methodParams.map((param, index) => (
                 <div className="row my-2" key={index}>
                   <div className="col">
-                    <div className="row">
+                    <div className="row align-items-center">
                       <div className="col-auto">
                         <var className="param-name">{param.name}</var> :{" "}
                         <code>{param.type}</code>
@@ -343,38 +382,62 @@ export class ApiItem extends React.Component {
     );
   }
 }
+ApiItem.propTypes = {
+  methodName: PropTypes.string,
+  methodParams: PropTypes.array,
+  payable: PropTypes.bool,
+  readonly: PropTypes.bool,
+
+  hubState: PropTypes.object,
+  stepLimit: PropTypes.string,
+};
 
 function ApiList(props) {
-  return props.methods.map((item, index) => (
-    <ApiItem
-      methodName={item.methodName}
-      methodParams={item.methodParams}
-      payable={item.payable}
-      readonly={props.readonly}
-      key={index + item.methodName}
-    />
-  ));
+  return (
+    <div className="container api-list">
+      {props.methods.map((item, index) => (
+        <ApiItem
+          methodName={item.methodName}
+          methodParams={item.methodParams}
+          payable={item.payable}
+          readonly={props.readonly}
+          hubState={props.hubState}
+          stepLimit={props.stepLimit}
+          key={index + item.methodName}
+        />
+      ))}
+    </div>
+  );
 }
+ApiList.propTypes = {
+  methods: PropTypes.array,
+  readonly: PropTypes.bool,
+  hubState: PropTypes.object,
+  stepLimit: PropTypes.string,
+};
+
+// ================================================================================================
+// ContractCallPanel
 
 /**
- * Contain list of API and params input
+ * Contain list of SCORE contract calls and their params input
  */
-export class ContractApi extends React.Component {
+export class ContractCallPanel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: props.title,
       readonlyMethods: [],
       methods: [],
       invalidContractError: "",
       contractName: "",
       noContract: true,
       fetching: false,
+      stepLimit: "500000000",
     };
   }
 
   async componentDidMount() {
-    if (this.context.explorerState.contract) {
+    if (this.props.hubState.contract) {
       await this.fetchMethods();
     }
   }
@@ -384,9 +447,9 @@ export class ContractApi extends React.Component {
 
     try {
       const api = new IconApi({
-        endpoint: this.context.explorerState.endpoint,
-        nid: this.context.explorerState.nid,
-        contract: this.context.explorerState.contract,
+        endpoint: this.props.hubState.network.loopchain_endpoint,
+        nid: this.props.hubState.network.network_id,
+        contract: this.props.hubState.contract,
       });
       const apiList = await api.getScoreApi();
 
@@ -422,9 +485,9 @@ export class ContractApi extends React.Component {
       // Get contract name, if any
       try {
         const api = new IconApi({
-          endpoint: this.context.explorerState.endpoint,
-          nid: this.context.explorerState.nid,
-          contract: this.context.explorerState.contract,
+          endpoint: this.props.hubState.network.loopchain_endpoint,
+          nid: this.props.hubState.network.network_id,
+          contract: this.props.hubState.contract,
         });
         const cxName = await api.call("name", {});
         this.setState({ contractName: cxName });
@@ -448,96 +511,119 @@ export class ContractApi extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid ContractApi">
-        <h4 id="ContractApi-title">{this.state.title}</h4>
-        <div className="container-fluid px-1">
-          <div className="row my-4">
-            <div className="col-auto">
-              {!this.state.noContract ? (
-                this.state.contractName ? (
-                  <div className="contract-name">
-                    Contract name : <b>{this.state.contractName}</b>
-                  </div>
-                ) : (
-                  <div className="no-contract-name">
-                    This contract has no name
-                  </div>
-                )
-              ) : (
-                <div className="no-contract-name">No contract</div>
-              )}
-            </div>
-
-            <div className="col-sm-4">
-              <input
-                type="text"
-                className="form-control"
-                id="contract-address-input"
-                value={this.context.explorerState.contract}
-                onChange={(e) =>
-                  this.context.updateExplorerState({ contract: e.target.value })
-                }
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    this.fetchMethods();
-                  }
-                }}
-                title="Press Enter to refresh contract API list"
-                placeholder="Contract address here"
-                required
-              />
-
-              {this.state.invalidContractError ? (
-                <div className="alert alert-error" role="alert">
-                  {this.state.invalidContractError}
+      <div className="container-fluid contract-call-panel">
+        <div className="row my-4">
+          <div className="col-auto">
+            {!this.state.noContract ? (
+              this.state.contractName ? (
+                <div className="contract-name">
+                  Contract name : <b>{this.state.contractName}</b>
                 </div>
               ) : (
-                ""
-              )}
-            </div>
+                <div className="no-contract-name">
+                  This contract has no name
+                </div>
+              )
+            ) : (
+              <div className="no-contract-name">No contract</div>
+            )}
+          </div>
 
-            <div className="col-auto">
-              <div
-                type="button"
-                className="btn btn-primary btn-sm"
-                onClick={async () => this.fetchMethods()}
-              >
-                Refresh
+          <div className="col-sm-4">
+            <input
+              type="text"
+              className="form-control"
+              id="contract-address-input"
+              value={this.props.hubState.contract}
+              onChange={(e) =>
+                this.props.updateHubState({ contract: e.target.value })
+              }
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  this.fetchMethods();
+                }
+              }}
+              title="Press Enter to refresh contract API list"
+              placeholder="Contract address here"
+              required
+            />
+
+            {this.state.invalidContractError ? (
+              <div className="alert alert-error" role="alert">
+                {this.state.invalidContractError}
               </div>
-            </div>
-
-            {this.state.fetching ? (
-              <div className="fetching">Fetching contract APIs...</div>
             ) : (
               ""
             )}
           </div>
 
-          <div className="row">
-            <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-              <div className="container">
-                <h5 id="ApiList-title">Readonly methods</h5>
-                <div className="container">
-                  <ApiList
-                    methods={this.state.readonlyMethods}
-                    readonly={true}
-                  />
-                </div>
-                {this.state.readonlyMethods.length > 0 ? "" : "...empty..."}
-              </div>
+          <div className="col-auto">
+            <div
+              type="button"
+              className="btn btn-primary btn-sm hub-btn-primary"
+              onClick={async () => this.fetchMethods()}
+            >
+              Refresh
             </div>
-            <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-              <div className="container">
-                <h5 id="ApiList-title">Writable methods</h5>
-                <div className="container">
-                  <ApiList methods={this.state.methods} readonly={false} />
-                </div>
-                {this.state.methods.length > 0 ? "" : "...empty..."}
-              </div>
-            </div>
+          </div>
+
+          {this.state.fetching ? (
+            <div className="fetching">Fetching contract APIs...</div>
+          ) : (
+            ""
+          )}
+
+          <VerticalSeparator />
+
+          <div className="col-auto align-self-center">Step limit</div>
+
+          <div className="col-auto">
+            <input
+              type="text"
+              className="form-control"
+              id="step-limit-input"
+              value={this.state.stepLimit}
+              onChange={(e) => this.setState({ stepLimit: e.target.value })}
+              title="Step limit"
+              placeholder="Step limit"
+              required
+            />
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <h5 className="api-list-title">Readonly</h5>
+            <HorizonalSeparator />
+
+            <ApiList
+              methods={this.state.readonlyMethods}
+              readonly={true}
+              hubState={this.props.hubState}
+              stepLimit={this.state.stepLimit}
+            />
+
+            {this.state.readonlyMethods.length > 0 ? "" : "...empty..."}
+          </div>
+          <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <h5 id="api-list-title">Writable</h5>
+            <HorizonalSeparator />
+
+            <ApiList
+              methods={this.state.methods}
+              readonly={false}
+              hubState={this.props.hubState}
+              stepLimit={this.state.stepLimit}
+            />
+
+            {this.state.methods.length > 0 ? "" : "...empty..."}
           </div>
         </div>
       </div>
     );
   }
 }
+ContractCallPanel.propTypes = {
+  hubState: PropTypes.object,
+  updateHubState: PropTypes.func,
+};

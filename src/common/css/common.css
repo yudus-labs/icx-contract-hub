@@ -1,0 +1,173 @@
+:root {
+  /* Primary */
+  --primary-light: #61daf2;
+  --primary-light-text: #1f454d;
+
+  --primary-main-1: #57c3d9;
+  --primary-main-2: #47a1b3;
+  --primary-main-3: #337380;
+  --primary-main-text: #ffffff;
+
+  --primary-dark: #1f454d;
+  --primary-dark-text: #e6f0f2;
+
+  /* Primary background */
+  --primary-bg-white: #fafafa;
+  --primary-bg-light: #edf1f2;
+  --primary-bg-1: #e1e5e6;
+  --primary-bg-2: #c8cbcc;
+  --primary-bg-text: #4b4c4d;
+
+  --primary-bg-dark: #919899;
+  --primary-bg-dark-text: #ffffff;
+
+  /* Secondary hot */
+  --secondary-hot-1: #e5c0b8;
+  --secondary-hot-dark-text: #4d4949;
+  --secondary-hot-2: #e68873;
+  --secondary-hot-3: #e65939;
+  --secondary-hot-text: #f2e8e6;
+
+  /* Secondary warm */
+  --secondary-warm-1: #f2e2c2;
+  --secondary-warm-2: #f2ca79;
+  --secondary-warm-3: #f2b230;
+  --secondary-warm-text: #4d4b49;
+
+  /* Secondary cool */
+  --secondary-cool-1: #b8e6d2;
+  --secondary-cool-dark-text: #494d4b;
+  --secondary-cool-2: #66cca1;
+  --secondary-cool-3: #36b37e;
+  --secondary-cool-text: #f2fffa;
+}
+
+.section-block {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.text-area:focus {
+  outline: none !important;
+  border: 1px solid var(--primary-main-2);
+  box-shadow: 0 0 5px var(--primary-main-3);
+}
+
+/* Custom link */
+
+.custom-link {
+  color: var(--primary-main-3);
+}
+
+.custom-link:hover {
+  color: var(--secondary-cool-3) !important;
+}
+
+/* Separator */
+
+.horizonal-separator {
+  height: 5px;
+  background-color: var(--primary-bg-dark);
+  margin: 15px 0 15px 0;
+}
+
+.vertical-separator {
+  width: 3px;
+  background-color: var(--primary-bg-dark);
+  margin: 0 15px 0 15px;
+}
+
+/* Custom hub button */
+
+.hub-btn-primary {
+  color: var(--primary-main-text);
+  background: var(--primary-main-2);
+  border: none;
+}
+.hub-btn-primary:active,
+.hub-btn-primary:hover,
+.hub-btn-primary:focus {
+  color: var(--primary-main-text) !important;
+  background: var(--primary-main-3) !important;
+  border: none !important;
+  border-style: none !important;
+  box-shadow: none !important;
+}
+
+.hub-btn-secondary {
+  color: var(--primary-main-text);
+  background: var(--primary-main-1);
+  border: none;
+}
+.hub-btn-secondary:active,
+.hub-btn-secondary:hover,
+.hub-btn-secondary:focus {
+  color: var(--primary-main-text) !important;
+  background: var(--primary-main-2) !important;
+  border: none !important;
+  border-style: none !important;
+  box-shadow: none !important;
+}
+
+/* Status label */
+
+.succeed-label {
+  font-size: 15px;
+  font-weight: bold;
+  height: 25px;
+  background-color: var(--secondary-cool-3);
+  color: var(--secondary-cool-text);
+  padding: 0 5px 5px 5px;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.warning-label {
+  font-size: 15px;
+  font-weight: bold;
+  height: 25px;
+  background-color: var(--secondary-warm-3);
+  color: var(--secondary-warm-text);
+  padding: 0 5px 5px 5px;
+  border-radius: 4px;
+}
+
+.failed-label {
+  font-size: 15px;
+  font-weight: bold;
+  height: 25px;
+  background-color: var(--secondary-hot-3);
+  color: var(--secondary-hot-text);
+  padding: 0 5px 5px 5px;
+  text-align: start;
+  border-radius: 4px;
+}
+
+/* Alert */
+
+.alert-info {
+  background-color: var(--secondary-cool-1);
+  color: var(--secondary-cool-dark-text);
+  border-style: none;
+}
+
+.alert-error {
+  background-color: var(--secondary-hot-3);
+  color: var(--secondary-hot-text);
+  border-style: none;
+}
+
+.alert-success {
+  background-color: var(--secondary-cool-2);
+  color: var(--secondary-cool-text);
+  border-style: none;
+}
+
+/* Info text */
+
+.fetching {
+  margin-left: 10px;
+  margin-top: 5px;
+  font-style: italic;
+  color: var(--primary-dark);
+}

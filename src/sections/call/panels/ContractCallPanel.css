@@ -1,0 +1,64 @@
+@import "../../../common/css/common.css";
+
+.api-item {
+  background-color: var(--primary-bg-1);
+  color: var(--primary-bg-text);
+}
+
+.param-input {
+  height: 30px;
+}
+
+.param-name {
+  color: var(--primary-dark);
+}
+
+.icx-amount-input {
+  margin-top: 5px;
+  margin-left: 10px;
+  height: 30px;
+  font-size: 14px;
+}
+
+#contract-address-input {
+  height: 30px;
+}
+
+#step-limit-input {
+  height: 30px;
+}
+
+.api-list-title {
+  color: var(--primary-bg-text);
+  background: none;
+}
+
+.contract-name {
+  background-color: var(--secondary-cool-2);
+  color: var(--secondary-cool-text);
+  padding: 3px 10px 3px 10px;
+  border-radius: 5px;
+}
+
+.no-contract-name {
+  background-color: var(--secondary-hot-2);
+  color: var(--secondary-hot-text);
+  padding: 3px 10px 3px 10px;
+  border-radius: 5px;
+}
+
+.succeed-result-title {
+  background-color: var(--secondary-cool-2);
+  color: var(--secondary-cool-text);
+  height: 30px;
+  font-size: smaller;
+  padding: 5px 10px 2px 10px;
+}
+
+.error-result-title {
+  background-color: var(--secondary-hot-3);
+  color: var(--secondary-hot-text);
+  height: 30px;
+  font-size: smaller;
+  padding: 5px 10px 2px 10px;
+}

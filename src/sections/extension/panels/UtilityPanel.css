@@ -1,0 +1,11 @@
+@import "../../../common/css/common.css";
+
+.inline-span {
+  white-space: nowrap;
+}
+
+.utility-label {
+  background-color: var(--primary-bg-2);
+  color: var(--primary-bg-text);
+  padding: 5px;
+}

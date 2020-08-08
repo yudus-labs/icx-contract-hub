@@ -1,0 +1,13 @@
+@import "./common/css/common.css";
+
+.dropdown-menu {
+  background-color: var(--primary-bg-light);
+  color: var(--primary-bg-text);
+}
+
+.contract-hub {
+  padding-right: 0;
+  padding-left: 0;
+  margin-right: 0;
+  margin-left: 0;
+}

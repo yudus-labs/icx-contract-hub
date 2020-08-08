@@ -1,8 +1,8 @@
 {
-  "name": "icx-contract-explorer",
-  "version": "0.2.1",
+  "name": "icx-contract-hub",
+  "version": "0.3.0",
   "private": true,
-  "homepage": "/icxce",
+  "homepage": "/icontracthub",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",

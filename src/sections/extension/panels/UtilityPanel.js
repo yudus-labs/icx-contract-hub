@@ -1,6 +1,8 @@
 import React from "react";
-import "./css/Utility.css";
-import IconService, { HttpProvider } from "icon-sdk-js";
+import PropTypes from "prop-types";
+import { IconApi } from "../../../chainApi/IconApi.js";
+
+import "./UtilityPanel.css";
 
 export class CheckTx extends React.Component {
   constructor(props) {
@@ -14,9 +16,12 @@ export class CheckTx extends React.Component {
     let txResult = "";
 
     try {
-      const provider = new HttpProvider(this.context.explorerState.endpoint);
-      const iconService = new IconService(provider);
-      txResult = await iconService.getTransactionResult(txHash).execute();
+      const api = new IconApi({
+        endpoint: this.props.hubState.network.loopchain_endpoint,
+        nid: this.props.hubState.network.network_id,
+        contract: this.props.hubState.contract,
+      });
+      txResult = await api.checkTx(txHash);
     } catch (err) {
       txResult = err;
     }
@@ -28,14 +33,14 @@ export class CheckTx extends React.Component {
 
   render() {
     return (
-      <div className="container UnitConverter">
+      <div className="container-fluid unit-converter">
         <h6 className="utility-label">Check transaction result</h6>
 
         <div className="row my-1">
           <div className="col-auto">
             <div
               type="button"
-              className="btn btn-primary btn-sm"
+              className="btn btn-primary btn-sm hub-btn-primary"
               onClick={async () => this.checkTx(this.state.txHash)}
             >
               Check
@@ -75,12 +80,14 @@ export class CheckTx extends React.Component {
     );
   }
 }
+CheckTx.propTypes = {
+  hubState: PropTypes.object,
+};
 
 class UnitConverter extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: props.title,
       loops: 0,
       icx: 0,
       hex: 0,
@@ -106,10 +113,10 @@ class UnitConverter extends React.Component {
 
   render() {
     return (
-      <div className="container UnitConverter">
+      <div className="container-fluid unit-converter">
         <h6 className="utility-label">Unit convert</h6>
         <div className="row my-1">
-          <div className="col-auto">
+          <div className="col">
             <input
               type="number"
               className="form-control"
@@ -130,7 +137,7 @@ class UnitConverter extends React.Component {
           <div className="col-auto">
             <code>ICX</code> to/from <code>loops</code>
           </div>
-          <div className="col-auto">
+          <div className="col">
             <input
               type="number"
               className="form-control"
@@ -150,7 +157,7 @@ class UnitConverter extends React.Component {
         </div>
 
         <div className="row my-2">
-          <div className="col-auto">
+          <div className="col">
             <input
               type="number"
               className="form-control"
@@ -171,7 +178,7 @@ class UnitConverter extends React.Component {
           <div className="col-auto">
             <code>decimal</code> to/from <code>hex</code>
           </div>
-          <div className="col-auto">
+          <div className="col">
             <input
               type="text"
               className="form-control"
@@ -194,28 +201,22 @@ class UnitConverter extends React.Component {
   }
 }
 
-export class Utility extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      title: props.title,
-    };
-  }
-
-  render() {
-    return (
-      <div className="container Utility">
-        <h4 id="Utility-title">{this.state.title}</h4>
-        <div className="container">
-          <div className="row">
-            <UnitConverter />
-          </div>
-          <br />
-          <div className="row">
-            <CheckTx />
-          </div>
+export function UtilityPanel(props) {
+  return (
+    <div className="container-fluid utility-panel">
+      <div className="row">
+        <div className="col">
+          <UnitConverter />
+        </div>
+        <div className="col">
+          <CheckTx hubState={props.hubState} />
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
+
+UtilityPanel.propTypes = {
+  hubState: PropTypes.object,
+  updateHubState: PropTypes.func,
+};
