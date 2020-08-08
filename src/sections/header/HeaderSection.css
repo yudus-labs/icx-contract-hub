@@ -20,7 +20,7 @@
 #copyright {
   height: 15px;
   font-size: 15px;
-  font-family: "Source Code Pro" source-code-pro;
+  font-family: "Source Code Pro", source-code-pro, "Courier New", monospace;
   color: var(--primary-main-3);
   padding: 15px 0 15px 0;
 }
