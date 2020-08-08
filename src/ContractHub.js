@@ -44,8 +44,8 @@ ExtensionSection.contextType = ContractHubContext;
 HistorySection.contextType = ContractHubContext;
 CallSection.contextType = ContractHubContext;
 
-// ReactGA.initialize("UA-169204893-3");
-// ReactGA.pageview(window.location.pathname + window.location.search);
+ReactGA.initialize("UA-169204893-3");
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 class ContractHub extends React.Component {
   constructor(props) {
