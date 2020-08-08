@@ -7,7 +7,7 @@ import { HorizonalSeparator } from "../../common/Util";
 import "./HeaderSection.css";
 
 const TITLE = "ICX Contract Hub";
-const SUB_TITLE = "For ICON developers - By Yudus Lab";
+const SUB_TITLE = "For ICON developers";
 const COPYRIGHT = "v0.3.0 - © 2020";
 
 function TitlePanel(props) {
@@ -15,7 +15,9 @@ function TitlePanel(props) {
     <div className="container title-panel">
       <div id="main-title">{TITLE}</div>
       <HorizonalSeparator width={"320px"} />
-      <div id="sub-title">{SUB_TITLE}</div>
+      <div id="sub-title">
+        {SUB_TITLE} - By <b>Yudus Lab</b>
+      </div>
       <div id="copyright">{COPYRIGHT}</div>
     </div>
   );
