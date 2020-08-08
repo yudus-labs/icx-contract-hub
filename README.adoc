@@ -1,8 +1,18 @@
-# ICX Contract Explorer
+# ICX Contract Hub
 
 A developer-oriented explorer dedicated for smart contract development on ICON blockchain network.
 
 ### Changes log
+
+#### _v0.3.0_
+
+- New "backendless" architecture with link:https://github.com/yudus-lab/chainalytic-icon[Chainalytic ICON] as data provider which can be run as a "data node" for any `loopchain` network
+
+- Brandnew tab-view layout
+
+- Transaction history ( require link:https://github.com/yudus-lab/chainalytic-icon[Chainalytic ICON] )
+
+- Favorite contract bookmarks
 
 #### _v0.2.1_
 
@@ -29,7 +39,3 @@ A developer-oriented explorer dedicated for smart contract development on ICON b
 *Desktop full layout*
 
 image::docs/icx-ce.png[]
-
-*Features*
-
-image::docs/new-features.png[]
