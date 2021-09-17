@@ -22,6 +22,12 @@ const NETWORKS = [
     network_id: "3",
   },
   {
+    name: "Sejong",
+    loopchain_endpoint: "https://sejong.net.solidwallet.io/api/v3",
+    chainalytic_endpoint: "https://yudus.dev/chainalytic-icon/api/testnet",
+    network_id: "83",
+  },
+  {
     name: "Local",
     loopchain_endpoint: "http://localhost:9000/api/v3",
     chainalytic_endpoint: "http://localhost:5600",
