@@ -352,15 +352,36 @@ export class ApiItem extends React.Component {
                         <code>{param.type}</code>
                       </div>
                       <div className="col">
-                        <input
-                          type="text"
-                          className="form-control param-input"
-                          value={this.state.paramValues[param.name] || ""}
-                          onChange={(e) =>
-                            this.updateParamValue(param.name, e.target.value)
-                          }
-                          required={true}
-                        />
+                        {param.type === "struct" ? console.log(this.state.methodParams) ||
+                          param.fields?.map((field, index) => (
+                            <div className="col">
+                              <div className="col-auto">
+                                <var className="param-name">{field.name}</var> :{" "}
+                                <code>{field.type}</code>
+                              </div>
+                              <input
+                                type="text"
+                                className="form-control param-input"
+                                value={this.state.paramValues[param.name] ? this.state.paramValues[param.name][field.name] : "" || ""}
+                                onChange={(e) => {
+                                  var fields = this.state.paramValues[param.name] || {}
+                                  fields[field.name] = e.target.value
+                                  this.updateParamValue(param.name, fields)
+                                }}
+                                required={true}
+                              />
+                            </div>
+                          )) :
+                            <input
+                              type="text"
+                              className="form-control param-input"
+                              value={this.state.paramValues[param.name] || ""}
+                              onChange={(e) =>
+                                this.updateParamValue(param.name, e.target.value)
+                              }
+                              required={true}
+                            />
+                        }
                       </div>
                     </div>
                   </div>
